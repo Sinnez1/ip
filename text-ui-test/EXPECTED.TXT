@@ -12,6 +12,7 @@ Nice! I've marked this task as done:
 [T][X] borrow book
 ____________________________________________________________
 ____________________________________________________________
+Here are the tasks in your list:
 1.[T][X] borrow book
 ____________________________________________________________
 ____________________________________________________________
@@ -19,6 +20,7 @@ OK, I've marked this task as not done yet:
 [T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
+Here are the tasks in your list:
 1.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
@@ -37,6 +39,7 @@ Got it. Pinggu has added this task:
 Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
+Here are the tasks in your list:
 1.[T][ ] borrow book
 2.[D][ ] return book  (by: Sunday)
 3.[E][ ] project meeting (from: Mon 2pm  to: 4pm)
@@ -47,6 +50,7 @@ Nice! I've marked this task as done:
 [E][X] project meeting (from: Mon 2pm  to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
+Here are the tasks in your list:
 1.[T][ ] borrow book
 2.[D][ ] return book  (by: Sunday)
 3.[E][X] project meeting (from: Mon 2pm  to: 4pm)
@@ -58,6 +62,7 @@ Noted. Pinggu has removed this task:
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
+Here are the tasks in your list:
 1.[D][ ] return book  (by: Sunday)
 2.[E][X] project meeting (from: Mon 2pm  to: 4pm)
 3.[D][ ] do homework  (by: no idea :-p)
