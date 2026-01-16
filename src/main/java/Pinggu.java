@@ -28,9 +28,24 @@ public class Pinggu {
                 int taskNo = Integer.parseInt(array[1]) - 1;
                 Task task = tasks.get(taskNo);
                 task.unmarkTask();
-            } else {
+            } else if (input.startsWith("todo")) {
+                String description = input.substring(5);
+                addTask(new Todo(description));
+            } else if (input.startsWith("deadline")) {
+                int byDate = input.indexOf("/by");
+                String description = input.substring(9, byDate);
+                String by = input.substring(byDate + 4);
+                addTask(new Deadline(description, by));
+            } else if (input.startsWith("event")) {
+                int fromDate = input.indexOf("/from");
+                int toDate = input.indexOf("/to");
+                String description = input.substring(6, fromDate);
+                String from = input.substring(fromDate + 6, toDate);
+                String to = input.substring(toDate + 4);
+                addTask(new Event(description, from, to));
+            }
+            else {
                 printText(input);
-                addTask(input);
             }
         }
     }
@@ -49,9 +64,13 @@ public class Pinggu {
         System.out.println(output);
     }
 
-    private static void addTask(String input) {
-        Task task = new Task(input);
+    private static void addTask(Task task) {
         tasks.add(task);
+        System.out.println(DIVIDER);
+        System.out.println("Got it. I've added this task:");
+        System.out.println(" " + task.toString());
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+        System.out.println(DIVIDER);
     }
 
     private static void listTasks() {
