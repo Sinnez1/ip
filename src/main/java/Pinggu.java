@@ -6,8 +6,8 @@ public class Pinggu {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String text = DIVIDER + "\n"
-                + "Hello! I'm Pinggu \n"
-                + "What can I do for you? \n"
+                + "Hello! I'm Pinggu\n"
+                + "What can I do for you?\n"
                 + DIVIDER;
         System.out.println(text);
 
@@ -59,7 +59,7 @@ public class Pinggu {
 
     private static void printExit() {
         String output = DIVIDER + "\n"
-                + "Bye. Hope to see you again soon! \n"
+                + "Bye. Hope to see you again soon!\n"
                 + DIVIDER;
         System.out.println(output);
     }
