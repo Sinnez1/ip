@@ -3,6 +3,18 @@ import java.util.*;
 public class Pinggu {
     private static List<Task> tasks = new ArrayList<>();
     public static final String DIVIDER = "____________________________________________________________";
+
+    public enum Commands {
+        bye,
+        list,
+        mark,
+        unmark,
+        todo,
+        deadline,
+        event,
+        delete
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String text = DIVIDER + "\n"
@@ -13,32 +25,43 @@ public class Pinggu {
 
         while (true) {
             String input = scanner.nextLine();
+            String[] split = input.split(" ");
+            String command = split[0];
+
             try {
-                if (input.equals("bye")) {
-                    printExit();
-                    break;
-                } else if (input.equals("list")) {
-                    listTasks();
-                } else if (input.startsWith("mark")) {
-                    createMarkTask(input);
-                } else if (input.startsWith("unmark")) {
-                    createUnmarkTask(input);
-                } else if (input.startsWith("todo")) {
-                    createTodo(input);
-                } else if (input.startsWith("deadline")) {
-                    createDeadLine(input);
-                } else if (input.startsWith("event")) {
-                    createEvent(input);
-                } else if (input.startsWith("delete")) {
-                    deleteTask(input);
-                } else {
-                    throw new PingguException("Noot Noot! " +
-                            "Pinggu does not recognize this command! \uD83D\uDC27");
+                Commands cmd = Commands.valueOf(command); //returns enum, will throw IllegalArgumentException
+                switch (cmd) {
+                    case bye:
+                        printExit();
+                        return;
+                    case list:
+                        listTasks();
+                        break;
+                    case mark:
+                        createMarkTask(input);
+                        break;
+                    case unmark:
+                        createUnmarkTask(input);
+                        break;
+                    case todo:
+                        createTodo(input);
+                        break;
+                    case deadline:
+                        createDeadLine(input);
+                        break;
+                    case event:
+                        createEvent(input);
+                        break;
+                    case delete:
+                        deleteTask(input);
+                        break;
                 }
+            } catch (NumberFormatException e) { //has to come before IllegalArgumentException as it extends that
+                    printMessage("Pinggu needs a valid number!");
+            } catch (IllegalArgumentException e) {
+                printMessage("Noot Noot! Pinggu does not recognize this command!");
             } catch (PingguException e) {
                 printMessage(e.getMessage());
-            } catch (NumberFormatException e) {
-                printMessage("Pinggu needs a valid number!");
             } catch (IndexOutOfBoundsException e) {
                 printMessage("Pinggu does not have this task number! " +
                         "The max is " + tasks.size());
