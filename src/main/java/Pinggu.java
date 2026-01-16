@@ -38,7 +38,7 @@ public class Pinggu {
             } catch (PingguException e) {
                 printMessage(e.getMessage());
             } catch (NumberFormatException e) {
-                printMessage("Pinggu needs a task number to mark!");
+                printMessage("Pinggu needs a valid number!");
             } catch (IndexOutOfBoundsException e) {
                 printMessage("Pinggu does not have this task number! " +
                         "The max is " + tasks.size());
@@ -69,6 +69,7 @@ public class Pinggu {
 
     private static void listTasks() {
         System.out.println(DIVIDER);
+        System.out.println("Here are the tasks in your list:");
         int counter = 1;
         for (Task task : tasks) {
             System.out.println(counter + "." + task.toString());
