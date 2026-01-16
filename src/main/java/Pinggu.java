@@ -58,8 +58,7 @@ public class Pinggu {
         System.out.println(DIVIDER);
         int counter = 1;
         for (Task task : tasks) {
-            System.out.println(counter + "." + "[" + task.getStatusIcon() + "] "
-                    + task.description);
+            System.out.println(counter + "." + task.toString());
             counter++;
         }
         System.out.println(DIVIDER);
