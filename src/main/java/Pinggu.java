@@ -29,22 +29,24 @@ public class Pinggu {
                     createDeadLine(input);
                 } else if (input.startsWith("event")) {
                     createEvent(input);
+                } else if (input.startsWith("delete")) {
+                    deleteTask(input);
                 } else {
                     throw new PingguException("Noot Noot! " +
                             "Pinggu does not recognize this command! \uD83D\uDC27");
                 }
             } catch (PingguException e) {
-                printError(e.getMessage());
+                printMessage(e.getMessage());
             } catch (NumberFormatException e) {
-                printError("Pinggu needs a task number to mark!");
+                printMessage("Pinggu needs a task number to mark!");
             } catch (IndexOutOfBoundsException e) {
-                printError("Pinggu does not have this task number! " +
+                printMessage("Pinggu does not have this task number! " +
                         "The max is " + tasks.size());
             }
         }
     }
 
-    private static void printError(String msg) {
+    private static void printMessage(String msg) { //used to print normal errors and common messages
         System.out.println(DIVIDER);
         System.out.println(msg);
         System.out.println(DIVIDER);
@@ -59,11 +61,10 @@ public class Pinggu {
 
     private static void addTask(Task task) {
         tasks.add(task);
-        System.out.println(DIVIDER);
-        System.out.println("Got it. Pinggu has added this task:");
-        System.out.println(" " + task.toString());
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-        System.out.println(DIVIDER);
+        String msg = "Got it. Pinggu has added this task:\n"
+                + " " + task.toString() + "\n"
+                + "Now you have " + tasks.size() + " tasks in the list.";
+        printMessage(msg);
     }
 
     private static void listTasks() {
@@ -146,5 +147,19 @@ public class Pinggu {
         }
 
         addTask(new Event(description, from, to));
+    }
+
+    private static void deleteTask(String input) throws PingguException {
+        if (input.trim().equals("delete")) {
+            throw new PingguException("Pinggu needs a task number to delete!");
+        }
+        String[] array = input.split(" ");
+        int taskToDelete = Integer.parseInt(array[1]) - 1;
+        Task task = tasks.get(taskToDelete); //throws error if out of bounds
+        tasks.remove(task);
+        String msg = "Noted. Pinggu has removed this task:\n"
+                + " " + task.toString() + "\n"
+                + "Now you have " + tasks.size() + " tasks in the list.";
+        printMessage(msg);
     }
 }

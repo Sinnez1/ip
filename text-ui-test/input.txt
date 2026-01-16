@@ -9,4 +9,6 @@ deadline do homework /by no idea :-p
 list
 mark 3
 list
+delete 1
+list
 bye
