@@ -13,53 +13,46 @@ public class Pinggu {
 
         while (true) {
             String input = scanner.nextLine();
-            if (input.equals("bye")) {
-                printExit();
-                break;
-            } else if (input.equals("list")) {
-                listTasks();
-            } else if (input.startsWith("mark")) {
-                String[] array = input.split(" ");
-                int taskNo = Integer.parseInt(array[1]) - 1; //0-indexing for List<>
-                Task task = tasks.get(taskNo);
-                task.markTask();
-            } else if (input.startsWith("unmark")) {
-                String[] array = input.split(" ");
-                int taskNo = Integer.parseInt(array[1]) - 1;
-                Task task = tasks.get(taskNo);
-                task.unmarkTask();
-            } else if (input.startsWith("todo")) {
-                String description = input.substring(5);
-                addTask(new Todo(description));
-            } else if (input.startsWith("deadline")) {
-                int byDate = input.indexOf("/by");
-                String description = input.substring(9, byDate);
-                String by = input.substring(byDate + 4);
-                addTask(new Deadline(description, by));
-            } else if (input.startsWith("event")) {
-                int fromDate = input.indexOf("/from");
-                int toDate = input.indexOf("/to");
-                String description = input.substring(6, fromDate);
-                String from = input.substring(fromDate + 6, toDate);
-                String to = input.substring(toDate + 4);
-                addTask(new Event(description, from, to));
-            }
-            else {
-                printText(input);
+            try {
+                if (input.equals("bye")) {
+                    printExit();
+                    break;
+                } else if (input.equals("list")) {
+                    listTasks();
+                } else if (input.startsWith("mark")) {
+                    createMarkTask(input);
+                } else if (input.startsWith("unmark")) {
+                    createUnmarkTask(input);
+                } else if (input.startsWith("todo")) {
+                    createTodo(input);
+                } else if (input.startsWith("deadline")) {
+                    createDeadLine(input);
+                } else if (input.startsWith("event")) {
+                    createEvent(input);
+                } else {
+                    throw new PingguException("Noot Noot! " +
+                            "Pinggu does not recognize this command! \uD83D\uDC27");
+                }
+            } catch (PingguException e) {
+                printError(e.getMessage());
+            } catch (NumberFormatException e) {
+                printError("Pinggu needs a task number to mark!");
+            } catch (IndexOutOfBoundsException e) {
+                printError("Pinggu does not have this task number! " +
+                        "The max is " + tasks.size());
             }
         }
     }
 
-    private static void printText(String text) {
-        String output = DIVIDER + "\n"
-                + "added: " + text + " \n"
-                + DIVIDER;
-        System.out.println(output);
+    private static void printError(String msg) {
+        System.out.println(DIVIDER);
+        System.out.println(msg);
+        System.out.println(DIVIDER);
     }
 
     private static void printExit() {
         String output = DIVIDER + "\n"
-                + "Bye. Hope to see you again soon!\n"
+                + "Bye. Pinggu hopes to see you again soon!\n"
                 + DIVIDER;
         System.out.println(output);
     }
@@ -67,7 +60,7 @@ public class Pinggu {
     private static void addTask(Task task) {
         tasks.add(task);
         System.out.println(DIVIDER);
-        System.out.println("Got it. I've added this task:");
+        System.out.println("Got it. Pinggu has added this task:");
         System.out.println(" " + task.toString());
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");
         System.out.println(DIVIDER);
@@ -81,5 +74,77 @@ public class Pinggu {
             counter++;
         }
         System.out.println(DIVIDER);
+    }
+
+    private static void createMarkTask(String input) {
+        String[] array = input.split(" ");
+        int taskNo = Integer.parseInt(array[1]) - 1; //0-indexing for List<>
+        Task task = tasks.get(taskNo); //throws error if out of bounds
+        task.markTask();
+    }
+
+    private static void createUnmarkTask(String input) {
+        String[] array = input.split(" ");
+        int taskNo = Integer.parseInt(array[1]) - 1;
+        Task task = tasks.get(taskNo); //throws error if out of bounds
+        task.unmarkTask();
+    }
+
+    private static void createTodo(String input) throws PingguException {
+        if (input.trim().equals("todo")) { //remove white space and check string equality
+            throw new PingguException("Pinggu needs a task to remind you of!");
+        }
+        String description = input.substring(5);
+        addTask(new Todo(description));
+    }
+
+    private static void createDeadLine(String input) throws PingguException {
+        if (input.trim().equals("deadline")) { //remove white space and check string equality
+            throw new PingguException("Pinggu needs a deadline task description!");
+        }
+        int byDate = input.indexOf("/by");
+        if (byDate == -1) { //cannot find a due date
+            throw new PingguException("Pinggu needs a due date! " +
+                    "Add /by <date> into your description!");
+        }
+        String description = input.substring(9, byDate);
+        String by = input.substring(byDate + 4);
+        if (description.isEmpty()) {
+            throw new PingguException("Pinggu needs a description!");
+        }
+        if (by.isEmpty()) {
+            throw new PingguException("Pinggu needs a due date! " +
+                    "Add /by <date> into your description!");
+        }
+        addTask(new Deadline(description, by));
+    }
+
+    private static void createEvent(String input) throws PingguException {
+        if (input.trim().equals("event")) {
+            throw new PingguException("Pinggu needs an event description!");
+        }
+        int fromDate = input.indexOf("/from");
+        int toDate = input.indexOf("/to");
+        if (fromDate == -1 || toDate == -1) {
+            throw new PingguException("Pinggu needs a start and end date! " +
+                    "Your description should have /from <date> and /to <date>!");
+
+        }
+        String description = input.substring(6, fromDate);
+        String from = input.substring(fromDate + 6, toDate);
+        String to = input.substring(toDate + 4);
+        if (description.isEmpty()) {
+            throw new PingguException("Pinggu needs a description!");
+        }
+        if (from.isEmpty()) {
+            throw new PingguException("Pinggu needs a start date! " +
+                    "Add /from <date> into your description!");
+        }
+        if (to.isEmpty()) {
+            throw new PingguException("Pinggu needs a due date! " +
+                    "Add /to <date> into your description!");
+        }
+
+        addTask(new Event(description, from, to));
     }
 }
