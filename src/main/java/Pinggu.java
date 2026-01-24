@@ -2,16 +2,23 @@
 import java.time.format.DateTimeParseException;
 
 public class Pinggu {
-    private static TaskList tasks;
-    private static Storage storage;
-    private static Ui ui;
+    private TaskList tasks;
+    private Storage storage;
+    private Ui ui;
     public static final String filePath = "./data/pinggu.txt";
 
-
-    public static void main(String[] args) {
+    public Pinggu(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
-        tasks = new TaskList(storage.load());
+        try {
+            tasks = new TaskList(storage.load());
+        } catch (PingguException e) {
+            ui.showLoadingError();
+            tasks = new TaskList();
+        }
+    }
+
+    public void run() {
         ui.showWelcome();
 
         while (true) {
@@ -25,36 +32,45 @@ public class Pinggu {
                     ui.showExit();
                     return;
                 case LIST:
-                    listTasks();
+                    ui.printTaskList(tasks);
                     break;
                 case MARK:
                     int markIndex = Parser.parseIndex(input);
-                    createMarkTask(markIndex);
+                    Task taskToMark = tasks.getTask(markIndex); //throws error if out of bounds
+                    taskToMark.markTask();
+                    ui.markTask(taskToMark);
                     isModified = true;
                     break;
                 case UNMARK:
                     int unmarkIndex = Parser.parseIndex(input);
-                    createUnmarkTask(unmarkIndex);
+                    Task taskToUnmark = tasks.getTask(unmarkIndex); //throws error if out of bounds
+                    taskToUnmark.unmarkTask();
+                    ui.unmarkTask(taskToUnmark);
                     isModified = true;
                     break;
                 case TODO:
                     Task todo = Parser.createTodo(input);
-                    addTask(todo);
+                    tasks.addTask(todo);
+                    ui.showAdd(todo, tasks.getSize());
                     isModified = true;
                     break;
                 case DEADLINE:
                     Task deadLine = Parser.createDeadline(input);
-                    addTask(deadLine);
+                    tasks.addTask(deadLine);
+                    ui.showAdd(deadLine, tasks.getSize());
                     isModified = true;
                     break;
                 case EVENT:
                     Task event = Parser.createEvent(input);
-                    addTask(event);
+                    tasks.addTask(event);
+                    ui.showAdd(event, tasks.getSize());
                     isModified = true;
                     break;
                 case DELETE:
                     int deleteIndex = Parser.parseIndex(input);
-                    deleteTask(deleteIndex);
+                    Task taskToDelete = tasks.getTask(deleteIndex); //throws error if out of bounds
+                    tasks.deleteTask(deleteIndex);
+                    ui.showDelete(taskToDelete, tasks.getSize());
                     isModified = true;
                     break;
                 }
@@ -76,31 +92,7 @@ public class Pinggu {
         }
     }
 
-    private static void addTask(Task task) {
-        tasks.addTask(task);
-        ui.showAdd(task, tasks.getSize());
-    }
-
-    private static void listTasks() {
-        ui.printTaskList(tasks);
-    }
-
-    private static void createMarkTask(int index) {
-        Task task = tasks.getTask(index); //throws error if out of bounds
-        task.markTask();
-        ui.markTask(task);
-    }
-
-    private static void createUnmarkTask(int index) {
-        Task task = tasks.getTask(index); //throws error if out of bounds
-        task.unmarkTask();
-        ui.unmarkTask(task);
-    }
-
-
-    private static void deleteTask(int input) throws PingguException {
-        Task task = tasks.getTask(input); //throws error if out of bounds
-        tasks.deleteTask(input);
-        ui.showDelete(task, tasks.getSize());
+    public static void main(String[] args) {
+        new Pinggu(filePath).run();
     }
 }

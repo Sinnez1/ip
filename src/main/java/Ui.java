@@ -37,6 +37,10 @@ public class Ui {
         showDivider();
     }
 
+    public void showLoadingError() {
+        printMessage("Error loading file. Starting with empty task list.");
+    }
+
     public void printTaskList(TaskList tasks) {
         showDivider();
         System.out.println("Here are the tasks in your list:");
