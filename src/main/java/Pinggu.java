@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.Scanner;
 
+import java.time.format.DateTimeParseException;
+
 public class Pinggu {
     private static List<Task> tasks;
     private static Storage storage;
@@ -145,7 +147,7 @@ public class Pinggu {
         int byDate = input.indexOf("/by");
         if (byDate == -1) { //cannot find a due date
             throw new PingguException("Pinggu needs a due date! "
-                    + "Add /by <date> into your description!");
+                    + "Add /by <yyyy-mm-dd> into your description!");
         }
         String description = input.substring(9, byDate);
         String by = input.substring(byDate + 4);
@@ -154,9 +156,14 @@ public class Pinggu {
         }
         if (by.isEmpty()) {
             throw new PingguException("Pinggu needs a due date! "
-                    + "Add /by <date> into your description!");
+                    + "Add /by <yyyy-mm-dd> into your description!");
         }
-        addTask(new Deadline(description, by));
+        try {
+            addTask(new Deadline(description, by));
+        } catch (DateTimeParseException e) {
+            printMessage("Pinggu needs a due date of <yyyy-mm-dd> format!");
+        }
+
     }
 
     private static void createEvent(String input) throws PingguException {
@@ -184,8 +191,11 @@ public class Pinggu {
             throw new PingguException("Pinggu needs a due date! "
                     + "Add /to <date> into your description!");
         }
-
-        addTask(new Event(description, from, to));
+        try {
+            addTask(new Event(description, from, to));
+        } catch (DateTimeParseException e) {
+            printMessage("Pinggu needs a start and due dates of <yyyy-mm-dd> format!");
+        }
     }
 
     private static void deleteTask(String input) throws PingguException {
