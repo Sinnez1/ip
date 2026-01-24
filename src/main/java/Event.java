@@ -13,7 +13,7 @@ public class Event extends Task {
     }
     @Override
     public String toString() {
-        return "[E]" + super.toString() + "(from: "
+        return "[E]" + super.toString() + " (from: "
                 + from.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))
                 + " to: " + to.format(DateTimeFormatter.ofPattern("MMM dd yyyy"))
                 + ")";
