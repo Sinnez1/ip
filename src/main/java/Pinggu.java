@@ -136,7 +136,7 @@ public class Pinggu {
         if (input.trim().equals("todo")) { //remove white space and check string equality
             throw new PingguException("Pinggu needs a task to remind you of!");
         }
-        String description = input.substring(5);
+        String description = input.substring(5).trim();
         addTask(new Todo(description));
     }
 
@@ -149,8 +149,8 @@ public class Pinggu {
             throw new PingguException("Pinggu needs a due date! "
                     + "Add /by <yyyy-mm-dd> into your description!");
         }
-        String description = input.substring(9, byDate);
-        String by = input.substring(byDate + 4);
+        String description = input.substring(9, byDate).trim();
+        String by = input.substring(byDate + 4).trim();
         if (description.isEmpty()) {
             throw new PingguException("Pinggu needs a description!");
         }
@@ -174,22 +174,22 @@ public class Pinggu {
         int toDate = input.indexOf("/to");
         if (fromDate == -1 || toDate == -1) {
             throw new PingguException("Pinggu needs a start and end date! "
-                    + "Your description should have /from <date> and /to <date>!");
+                    + "Your description should have /from <yyyy-mm-dd> and /to <yyyy-mm-dd>!");
 
         }
-        String description = input.substring(6, fromDate);
-        String from = input.substring(fromDate + 6, toDate);
-        String to = input.substring(toDate + 4);
+        String description = input.substring(6, fromDate).trim();
+        String from = input.substring(fromDate + 6, toDate).trim();
+        String to = input.substring(toDate + 4).trim();
         if (description.isEmpty()) {
             throw new PingguException("Pinggu needs a description!");
         }
         if (from.isEmpty()) {
             throw new PingguException("Pinggu needs a start date! "
-                    + "Add /from <date> into your description!");
+                    + "Add /from <yyyy-mm-dd> into your description!");
         }
         if (to.isEmpty()) {
             throw new PingguException("Pinggu needs a due date! "
-                    + "Add /to <date> into your description!");
+                    + "Add /to <yyyy-mm-dd> into your description!");
         }
         try {
             addTask(new Event(description, from, to));
