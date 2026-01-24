@@ -1,3 +1,4 @@
+File created at C:\Users\Ryan Ang\Desktop\y2s2\iP\ip\text-ui-test\.\data\pinggu.txt
 ____________________________________________________________
 Hello! I'm Pinggu
 What can I do for you?
@@ -25,36 +26,36 @@ Here are the tasks in your list:
 ____________________________________________________________
 ____________________________________________________________
 Got it. Pinggu has added this task:
- [D][ ] return book  (by: Sunday)
+ [D][ ] return book (by: Jan 25 2026)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. Pinggu has added this task:
- [E][ ] project meeting (from: Mon 2pm  to: 4pm)
+ [E][ ] project meeting (from: Jan 27 2026 to: Jan 28 2027)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. Pinggu has added this task:
- [D][ ] do homework  (by: no idea :-p)
+ [D][ ] do homework (by: Jan 29 2026)
 Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][ ] borrow book
-2.[D][ ] return book  (by: Sunday)
-3.[E][ ] project meeting (from: Mon 2pm  to: 4pm)
-4.[D][ ] do homework  (by: no idea :-p)
+2.[D][ ] return book (by: Jan 25 2026)
+3.[E][ ] project meeting (from: Jan 27 2026 to: Jan 28 2027)
+4.[D][ ] do homework (by: Jan 29 2026)
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done:
-[E][X] project meeting (from: Mon 2pm  to: 4pm)
+[E][X] project meeting (from: Jan 27 2026 to: Jan 28 2027)
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][ ] borrow book
-2.[D][ ] return book  (by: Sunday)
-3.[E][X] project meeting (from: Mon 2pm  to: 4pm)
-4.[D][ ] do homework  (by: no idea :-p)
+2.[D][ ] return book (by: Jan 25 2026)
+3.[E][X] project meeting (from: Jan 27 2026 to: Jan 28 2027)
+4.[D][ ] do homework (by: Jan 29 2026)
 ____________________________________________________________
 ____________________________________________________________
 Noted. Pinggu has removed this task:
@@ -63,9 +64,9 @@ Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
-1.[D][ ] return book  (by: Sunday)
-2.[E][X] project meeting (from: Mon 2pm  to: 4pm)
-3.[D][ ] do homework  (by: no idea :-p)
+1.[D][ ] return book (by: Jan 25 2026)
+2.[E][X] project meeting (from: Jan 27 2026 to: Jan 28 2027)
+3.[D][ ] do homework (by: Jan 29 2026)
 ____________________________________________________________
 ____________________________________________________________
 Bye. Pinggu hopes to see you again soon!
