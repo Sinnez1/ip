@@ -31,4 +31,8 @@ public class Task {
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
     }
+
+    public String toSaveFile() {
+        return "Task | " + (isDone ? "1" : "0") + " | " + this.description;
+    }
 }
