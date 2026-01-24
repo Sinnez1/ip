@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.time.format.DateTimeParseException;
 
 public class Pinggu {
-    private static List<Task> tasks;
+    private static TaskList tasks;
     private static Storage storage;
     public static final String DIVIDER = "____________________________________________________________";
     public static final String filePath = "./data/pinggu.txt";
@@ -23,7 +23,7 @@ public class Pinggu {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         storage = new Storage(filePath);
-        tasks = storage.load();
+        tasks = new TaskList(storage.load());
         String text = DIVIDER + "\n"
                 + "Hello! I'm Pinggu\n"
                 + "What can I do for you?\n"
@@ -71,7 +71,7 @@ public class Pinggu {
                     break;
                 }
                 if (isModified) {
-                    storage.save(tasks);
+                    storage.save(tasks.getTasks());
                 }
             } catch (NumberFormatException e) { //has to come before IllegalArgumentException as it extends that
                     printMessage("Pinggu needs a valid number!");
@@ -81,7 +81,7 @@ public class Pinggu {
                 printMessage(e.getMessage());
             } catch (IndexOutOfBoundsException e) {
                 printMessage("Pinggu does not have this task number! "
-                        + "The max is " + tasks.size());
+                        + "The max is " + tasks.getSize());
             }
         }
     }
@@ -100,10 +100,10 @@ public class Pinggu {
     }
 
     private static void addTask(Task task) {
-        tasks.add(task);
+        tasks.addTask(task);
         String msg = "Got it. Pinggu has added this task:\n"
                 + " " + task.toString() + "\n"
-                + "Now you have " + tasks.size() + " tasks in the list.";
+                + "Now you have " + tasks.getSize() + " tasks in the list.";
         printMessage(msg);
     }
 
@@ -111,7 +111,7 @@ public class Pinggu {
         System.out.println(DIVIDER);
         System.out.println("Here are the tasks in your list:");
         int counter = 1;
-        for (Task task : tasks) {
+        for (Task task : tasks.getTasks()) {
             System.out.println(counter + "." + task.toString());
             counter++;
         }
@@ -121,14 +121,14 @@ public class Pinggu {
     private static void createMarkTask(String input) {
         String[] array = input.split(" ");
         int taskNo = Integer.parseInt(array[1]) - 1; //0-indexing for List<>
-        Task task = tasks.get(taskNo); //throws error if out of bounds
+        Task task = tasks.getTask(taskNo); //throws error if out of bounds
         task.markTask();
     }
 
     private static void createUnmarkTask(String input) {
         String[] array = input.split(" ");
         int taskNo = Integer.parseInt(array[1]) - 1;
-        Task task = tasks.get(taskNo); //throws error if out of bounds
+        Task task = tasks.getTask(taskNo); //throws error if out of bounds
         task.unmarkTask();
     }
 
@@ -204,11 +204,11 @@ public class Pinggu {
         }
         String[] array = input.split(" ");
         int taskToDelete = Integer.parseInt(array[1]) - 1;
-        Task task = tasks.get(taskToDelete); //throws error if out of bounds
-        tasks.remove(task);
+        Task task = tasks.getTask(taskToDelete); //throws error if out of bounds
+        tasks.deleteTask(taskToDelete);
         String msg = "Noted. Pinggu has removed this task:\n"
                 + " " + task.toString() + "\n"
-                + "Now you have " + tasks.size() + " tasks in the list.";
+                + "Now you have " + tasks.getSize() + " tasks in the list.";
         printMessage(msg);
     }
 }
