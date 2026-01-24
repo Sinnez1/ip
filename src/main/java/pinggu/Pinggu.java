@@ -1,3 +1,11 @@
+package pinggu;
+
+import pinggu.exception.PingguException;
+import pinggu.parser.Parser;
+import pinggu.storage.Storage;
+import pinggu.task.Task;
+import pinggu.task.TaskList;
+import pinggu.ui.Ui;
 
 import java.time.format.DateTimeParseException;
 
@@ -78,16 +86,16 @@ public class Pinggu {
                     storage.save(tasks.getTasks());
                 }
             } catch (NumberFormatException e) { //has to come before IllegalArgumentException as it extends that
-                ui.printMessage("Pinggu needs a valid number!");
+                ui.printMessage("pinggu.Pinggu needs a valid number!");
             } catch (IllegalArgumentException e) {
-                ui.printMessage("Noot Noot! Pinggu does not recognize this command!");
+                ui.printMessage("Noot Noot! pinggu.Pinggu does not recognize this command!");
             } catch (PingguException e) {
                 ui.printMessage(e.getMessage());
             } catch (IndexOutOfBoundsException e) {
-                ui.printMessage("Pinggu does not have this task number! "
+                ui.printMessage("pinggu.Pinggu does not have this task number! "
                         + "The max is " + tasks.getSize());
             } catch (DateTimeParseException e) {
-                ui.printMessage("Pinggu needs a valid date of <yyyy-mm-dd>!");
+                ui.printMessage("pinggu.Pinggu needs a valid date of <yyyy-mm-dd>!");
             }
         }
     }

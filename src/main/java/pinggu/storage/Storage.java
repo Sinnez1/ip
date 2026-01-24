@@ -1,3 +1,11 @@
+package pinggu.storage;
+
+import pinggu.task.Deadline;
+import pinggu.task.Event;
+import pinggu.task.Task;
+import pinggu.task.Todo;
+import pinggu.exception.PingguException;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

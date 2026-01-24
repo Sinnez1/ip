@@ -1,3 +1,8 @@
+package pinggu.ui;
+
+import pinggu.task.Task;
+import pinggu.task.TaskList;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -10,7 +15,7 @@ public class Ui {
 
     public void showWelcome() {
         String text = DIVIDER + "\n"
-                + "Hello! I'm Pinggu\n"
+                + "Hello! I'm pinggu.Pinggu\n"
                 + "What can I do for you?\n"
                 + DIVIDER;
         System.out.println(text);
@@ -26,7 +31,7 @@ public class Ui {
 
     public void showExit() {
         String output = DIVIDER + "\n"
-                + "Bye. Pinggu hopes to see you again soon!\n"
+                + "Bye. pinggu.Pinggu hopes to see you again soon!\n"
                 + DIVIDER;
         System.out.println(output);
     }
@@ -53,14 +58,14 @@ public class Ui {
     }
 
     public void showDelete(Task task, int size) {
-        String msg = "Noted. Pinggu has removed this task:\n"
+        String msg = "Noted. pinggu.Pinggu has removed this task:\n"
                 + " " + task.toString() + "\n"
                 + "Now you have " + size + " tasks in the list.";
         printMessage(msg);
     }
 
     public void showAdd(Task task, int size) {
-        String msg = "Got it. Pinggu has added this task:\n"
+        String msg = "Got it. pinggu.Pinggu has added this task:\n"
                 + " " + task.toString() + "\n"
                 + "Now you have " + size + " tasks in the list.";
         printMessage(msg);
