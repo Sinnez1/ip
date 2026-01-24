@@ -1,3 +1,5 @@
+package pinggu.task;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -25,6 +27,6 @@ public class Task {
     }
 
     public String toSaveFile() {
-        return "Task | " + (isDone ? "1" : "0") + " | " + this.description;
+        return "pinggu.task.Task | " + (isDone ? "1" : "0") + " | " + this.description;
     }
 }
