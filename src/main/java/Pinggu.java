@@ -1,8 +1,11 @@
-import java.util.*;
+import java.util.List;
+import java.util.Scanner;
 
 public class Pinggu {
-    private static List<Task> tasks = new ArrayList<>();
+    private static List<Task> tasks;
+    private static Storage storage;
     public static final String DIVIDER = "____________________________________________________________";
+    public static final String filePath = "./data/pinggu.txt";
 
     public enum Commands {
         BYE,
@@ -17,6 +20,8 @@ public class Pinggu {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        storage = new Storage(filePath);
+        tasks = storage.load();
         String text = DIVIDER + "\n"
                 + "Hello! I'm Pinggu\n"
                 + "What can I do for you?\n"
@@ -27,6 +32,7 @@ public class Pinggu {
             String input = scanner.nextLine();
             String[] split = input.split(" ");
             String command = split[0];
+            boolean isModified = false; //check if we changed our tasks
 
             try {
                 Commands cmd = Commands.valueOf(command.toUpperCase()); //returns enum, will throw IllegalArgumentException
@@ -39,22 +45,31 @@ public class Pinggu {
                     break;
                 case MARK:
                     createMarkTask(input);
+                    isModified = true;
                     break;
                 case UNMARK:
                     createUnmarkTask(input);
+                    isModified = true;
                     break;
                 case TODO:
                     createTodo(input);
+                    isModified = true;
                     break;
                 case DEADLINE:
                     createDeadLine(input);
+                    isModified = true;
                     break;
                 case EVENT:
                     createEvent(input);
+                    isModified = true;
                     break;
                 case DELETE:
                     deleteTask(input);
+                    isModified = true;
                     break;
+                }
+                if (isModified) {
+                    storage.save(tasks);
                 }
             } catch (NumberFormatException e) { //has to come before IllegalArgumentException as it extends that
                     printMessage("Pinggu needs a valid number!");
@@ -63,8 +78,8 @@ public class Pinggu {
             } catch (PingguException e) {
                 printMessage(e.getMessage());
             } catch (IndexOutOfBoundsException e) {
-                printMessage("Pinggu does not have this task number! " +
-                        "The max is " + tasks.size());
+                printMessage("Pinggu does not have this task number! "
+                        + "The max is " + tasks.size());
             }
         }
     }
@@ -129,8 +144,8 @@ public class Pinggu {
         }
         int byDate = input.indexOf("/by");
         if (byDate == -1) { //cannot find a due date
-            throw new PingguException("Pinggu needs a due date! " +
-                    "Add /by <date> into your description!");
+            throw new PingguException("Pinggu needs a due date! "
+                    + "Add /by <date> into your description!");
         }
         String description = input.substring(9, byDate);
         String by = input.substring(byDate + 4);
@@ -138,8 +153,8 @@ public class Pinggu {
             throw new PingguException("Pinggu needs a description!");
         }
         if (by.isEmpty()) {
-            throw new PingguException("Pinggu needs a due date! " +
-                    "Add /by <date> into your description!");
+            throw new PingguException("Pinggu needs a due date! "
+                    + "Add /by <date> into your description!");
         }
         addTask(new Deadline(description, by));
     }
@@ -151,8 +166,8 @@ public class Pinggu {
         int fromDate = input.indexOf("/from");
         int toDate = input.indexOf("/to");
         if (fromDate == -1 || toDate == -1) {
-            throw new PingguException("Pinggu needs a start and end date! " +
-                    "Your description should have /from <date> and /to <date>!");
+            throw new PingguException("Pinggu needs a start and end date! "
+                    + "Your description should have /from <date> and /to <date>!");
 
         }
         String description = input.substring(6, fromDate);
@@ -162,12 +177,12 @@ public class Pinggu {
             throw new PingguException("Pinggu needs a description!");
         }
         if (from.isEmpty()) {
-            throw new PingguException("Pinggu needs a start date! " +
-                    "Add /from <date> into your description!");
+            throw new PingguException("Pinggu needs a start date! "
+                    + "Add /from <date> into your description!");
         }
         if (to.isEmpty()) {
-            throw new PingguException("Pinggu needs a due date! " +
-                    "Add /to <date> into your description!");
+            throw new PingguException("Pinggu needs a due date! "
+                    + "Add /to <date> into your description!");
         }
 
         addTask(new Event(description, from, to));
