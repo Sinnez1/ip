@@ -15,7 +15,7 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    public List<Task> load() {
+    public List<Task> load() throws PingguException {
         List<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
         if (file.exists()) {
@@ -60,7 +60,7 @@ public class Storage {
         String[] parts =  line.split("\\|");
         if (parts.length < 3) return null; //task is invalid
         String taskType = parts[0].trim();
-        boolean isDone = parts[1].equals("1");
+        boolean isDone = parts[1].trim().equals("1");
         String taskDescription = parts[2].trim();
         Task task;
         switch (taskType) {
@@ -75,6 +75,9 @@ public class Storage {
             break;
         default:
             return null;
+        }
+        if (isDone) {
+            task.markTask();
         }
         return task;
     }
