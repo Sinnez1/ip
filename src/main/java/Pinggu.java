@@ -5,14 +5,14 @@ public class Pinggu {
     public static final String DIVIDER = "____________________________________________________________";
 
     public enum Commands {
-        bye,
-        list,
-        mark,
-        unmark,
-        todo,
-        deadline,
-        event,
-        delete
+        BYE,
+        LIST,
+        MARK,
+        UNMARK,
+        TODO,
+        DEADLINE,
+        EVENT,
+        DELETE
     }
 
     public static void main(String[] args) {
@@ -29,32 +29,32 @@ public class Pinggu {
             String command = split[0];
 
             try {
-                Commands cmd = Commands.valueOf(command); //returns enum, will throw IllegalArgumentException
+                Commands cmd = Commands.valueOf(command.toUpperCase()); //returns enum, will throw IllegalArgumentException
                 switch (cmd) {
-                    case bye:
-                        printExit();
-                        return;
-                    case list:
-                        listTasks();
-                        break;
-                    case mark:
-                        createMarkTask(input);
-                        break;
-                    case unmark:
-                        createUnmarkTask(input);
-                        break;
-                    case todo:
-                        createTodo(input);
-                        break;
-                    case deadline:
-                        createDeadLine(input);
-                        break;
-                    case event:
-                        createEvent(input);
-                        break;
-                    case delete:
-                        deleteTask(input);
-                        break;
+                case BYE:
+                    printExit();
+                    return;
+                case LIST:
+                    listTasks();
+                    break;
+                case MARK:
+                    createMarkTask(input);
+                    break;
+                case UNMARK:
+                    createUnmarkTask(input);
+                    break;
+                case TODO:
+                    createTodo(input);
+                    break;
+                case DEADLINE:
+                    createDeadLine(input);
+                    break;
+                case EVENT:
+                    createEvent(input);
+                    break;
+                case DELETE:
+                    deleteTask(input);
+                    break;
                 }
             } catch (NumberFormatException e) { //has to come before IllegalArgumentException as it extends that
                     printMessage("Pinggu needs a valid number!");
