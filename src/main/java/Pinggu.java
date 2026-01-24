@@ -6,6 +6,7 @@ import java.time.format.DateTimeParseException;
 public class Pinggu {
     private static TaskList tasks;
     private static Storage storage;
+    private static Ui ui;
     public static final String DIVIDER = "____________________________________________________________";
     public static final String filePath = "./data/pinggu.txt";
 
@@ -21,17 +22,13 @@ public class Pinggu {
     }
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        ui = new Ui();
         storage = new Storage(filePath);
         tasks = new TaskList(storage.load());
-        String text = DIVIDER + "\n"
-                + "Hello! I'm Pinggu\n"
-                + "What can I do for you?\n"
-                + DIVIDER;
-        System.out.println(text);
+        ui.showWelcome();
 
         while (true) {
-            String input = scanner.nextLine();
+            String input = ui.readLine();
             String[] split = input.split(" ");
             String command = split[0];
             boolean isModified = false; //check if we changed our tasks
@@ -40,7 +37,7 @@ public class Pinggu {
                 Commands cmd = Commands.valueOf(command.toUpperCase()); //returns enum, will throw IllegalArgumentException
                 switch (cmd) {
                 case BYE:
-                    printExit();
+                    ui.showExit();
                     return;
                 case LIST:
                     listTasks();
@@ -74,48 +71,25 @@ public class Pinggu {
                     storage.save(tasks.getTasks());
                 }
             } catch (NumberFormatException e) { //has to come before IllegalArgumentException as it extends that
-                    printMessage("Pinggu needs a valid number!");
+                ui.printMessage("Pinggu needs a valid number!");
             } catch (IllegalArgumentException e) {
-                printMessage("Noot Noot! Pinggu does not recognize this command!");
+                ui.printMessage("Noot Noot! Pinggu does not recognize this command!");
             } catch (PingguException e) {
-                printMessage(e.getMessage());
+                ui.printMessage(e.getMessage());
             } catch (IndexOutOfBoundsException e) {
-                printMessage("Pinggu does not have this task number! "
+                ui.printMessage("Pinggu does not have this task number! "
                         + "The max is " + tasks.getSize());
             }
         }
     }
 
-    private static void printMessage(String msg) { //used to print normal errors and common messages
-        System.out.println(DIVIDER);
-        System.out.println(msg);
-        System.out.println(DIVIDER);
-    }
-
-    private static void printExit() {
-        String output = DIVIDER + "\n"
-                + "Bye. Pinggu hopes to see you again soon!\n"
-                + DIVIDER;
-        System.out.println(output);
-    }
-
     private static void addTask(Task task) {
         tasks.addTask(task);
-        String msg = "Got it. Pinggu has added this task:\n"
-                + " " + task.toString() + "\n"
-                + "Now you have " + tasks.getSize() + " tasks in the list.";
-        printMessage(msg);
+        ui.showAdd(task, tasks.getSize());
     }
 
     private static void listTasks() {
-        System.out.println(DIVIDER);
-        System.out.println("Here are the tasks in your list:");
-        int counter = 1;
-        for (Task task : tasks.getTasks()) {
-            System.out.println(counter + "." + task.toString());
-            counter++;
-        }
-        System.out.println(DIVIDER);
+        ui.printTaskList(tasks);
     }
 
     private static void createMarkTask(String input) {
@@ -123,6 +97,7 @@ public class Pinggu {
         int taskNo = Integer.parseInt(array[1]) - 1; //0-indexing for List<>
         Task task = tasks.getTask(taskNo); //throws error if out of bounds
         task.markTask();
+        ui.markTask(task);
     }
 
     private static void createUnmarkTask(String input) {
@@ -130,6 +105,7 @@ public class Pinggu {
         int taskNo = Integer.parseInt(array[1]) - 1;
         Task task = tasks.getTask(taskNo); //throws error if out of bounds
         task.unmarkTask();
+        ui.unmarkTask(task);
     }
 
     private static void createTodo(String input) throws PingguException {
@@ -161,7 +137,7 @@ public class Pinggu {
         try {
             addTask(new Deadline(description, by));
         } catch (DateTimeParseException e) {
-            printMessage("Pinggu needs a due date of <yyyy-mm-dd> format!");
+            ui.printMessage("Pinggu needs a due date of <yyyy-mm-dd> format!");
         }
 
     }
@@ -194,7 +170,7 @@ public class Pinggu {
         try {
             addTask(new Event(description, from, to));
         } catch (DateTimeParseException e) {
-            printMessage("Pinggu needs a start and due dates of <yyyy-mm-dd> format!");
+            ui.printMessage("Pinggu needs a start and due dates of <yyyy-mm-dd> format!");
         }
     }
 
@@ -206,9 +182,6 @@ public class Pinggu {
         int taskToDelete = Integer.parseInt(array[1]) - 1;
         Task task = tasks.getTask(taskToDelete); //throws error if out of bounds
         tasks.deleteTask(taskToDelete);
-        String msg = "Noted. Pinggu has removed this task:\n"
-                + " " + task.toString() + "\n"
-                + "Now you have " + tasks.getSize() + " tasks in the list.";
-        printMessage(msg);
+        ui.showDelete(task, tasks.getSize());
     }
 }
