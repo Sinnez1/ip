@@ -1,5 +1,7 @@
 package pinggu;
 
+import java.time.format.DateTimeParseException;
+
 import pinggu.exception.PingguException;
 import pinggu.parser.Parser;
 import pinggu.storage.Storage;
@@ -7,17 +9,16 @@ import pinggu.task.Task;
 import pinggu.task.TaskList;
 import pinggu.ui.Ui;
 
-import java.time.format.DateTimeParseException;
-
 public class Pinggu {
+    public static final String FILEPATH = "./data/pinggu.txt";
     private TaskList tasks;
     private Storage storage;
     private Ui ui;
-    public static final String filePath = "./data/pinggu.txt";
+
 
     public Pinggu(String filePath) {
         ui = new Ui();
-        storage = new Storage(filePath);
+        storage = new Storage(FILEPATH);
         try {
             tasks = new TaskList(storage.load());
         } catch (PingguException e) {
@@ -31,7 +32,7 @@ public class Pinggu {
 
         while (true) {
             String input = ui.readLine();
-            boolean isModified = false; //check if we changed our tasks
+            boolean isModified = false; //check if we changed our task;
 
             try {
                 Parser.Commands cmd = Parser.parseCommand(input); //returns enum, will throw IllegalArgumentException
@@ -81,26 +82,29 @@ public class Pinggu {
                     ui.showDelete(taskToDelete, tasks.getSize());
                     isModified = true;
                     break;
+                default: //catch new commands in enum that has not been implemented
+                    throw new PingguException("This command is valid, but Pinggu has not learned it yet!");
+                    //default ends here
                 }
                 if (isModified) {
                     storage.save(tasks.getTasks());
                 }
             } catch (NumberFormatException e) { //has to come before IllegalArgumentException as it extends that
-                ui.printMessage("pinggu.Pinggu needs a valid number!");
+                ui.printMessage("Pinggu needs a valid number!");
             } catch (IllegalArgumentException e) {
-                ui.printMessage("Noot Noot! pinggu.Pinggu does not recognize this command!");
+                ui.printMessage("Noot Noot! Pinggu does not recognize this command!");
             } catch (PingguException e) {
                 ui.printMessage(e.getMessage());
             } catch (IndexOutOfBoundsException e) {
-                ui.printMessage("pinggu.Pinggu does not have this task number! "
+                ui.printMessage("Pinggu does not have this task number! "
                         + "The max is " + tasks.getSize());
             } catch (DateTimeParseException e) {
-                ui.printMessage("pinggu.Pinggu needs a valid date of <yyyy-mm-dd>!");
+                ui.printMessage("Pinggu needs a valid date of <yyyy-mm-dd>!");
             }
         }
     }
 
     public static void main(String[] args) {
-        new Pinggu(filePath).run();
+        new Pinggu(FILEPATH).run();
     }
 }
