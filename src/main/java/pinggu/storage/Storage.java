@@ -1,20 +1,17 @@
 package pinggu.storage;
 
-import pinggu.task.Deadline;
-import pinggu.task.Event;
-import pinggu.task.Task;
-import pinggu.task.Todo;
-import pinggu.exception.PingguException;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
+import pinggu.exception.PingguException;
+import pinggu.task.Deadline;
+import pinggu.task.Event;
+import pinggu.task.Task;
+import pinggu.task.Todo;
 
 public class Storage {
     private final String filePath;
@@ -47,7 +44,7 @@ public class Storage {
                 if (isCreated) {
                     System.out.println("File created at " + file.getAbsolutePath());
                 }
-            } catch (IOException e){
+            } catch (IOException e) {
                 System.out.println("File can not be created" + e.getMessage());
             }
         }
@@ -65,8 +62,10 @@ public class Storage {
     }
 
     private Task parseLine(String line) {
-        String[] parts =  line.split("\\|");
-        if (parts.length < 3) return null; //task is invalid
+        String[] parts = line.split("\\|");
+        if (parts.length < 3) {
+            return null; //task is invalid
+        }
         String taskType = parts[0].trim();
         boolean isDone = parts[1].trim().equals("1");
         String taskDescription = parts[2].trim();

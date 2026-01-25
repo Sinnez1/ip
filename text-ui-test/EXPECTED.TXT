@@ -1,10 +1,10 @@
 File created at C:\Users\Ryan Ang\Desktop\y2s2\iP\ip\text-ui-test\.\data\pinggu.txt
 ____________________________________________________________
-Hello! I'm pinggu.Pinggu
+Hello! I'm Pinggu.
 What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
-Got it. pinggu.Pinggu has added this task:
+Got it. Pinggu has added this task:
  [T][ ] borrow book
 Now you have 1 tasks in the list.
 ____________________________________________________________
@@ -25,17 +25,17 @@ Here are the tasks in your list:
 1.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
-Got it. pinggu.Pinggu has added this task:
+Got it. Pinggu has added this task:
  [D][ ] return book (by: Jan 25 2026)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. pinggu.Pinggu has added this task:
+Got it. Pinggu has added this task:
  [E][ ] project meeting (from: Jan 27 2026 to: Jan 28 2027)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. pinggu.Pinggu has added this task:
+Got it. Pinggu has added this task:
  [D][ ] do homework (by: Jan 29 2026)
 Now you have 4 tasks in the list.
 ____________________________________________________________
@@ -58,7 +58,7 @@ Here are the tasks in your list:
 4.[D][ ] do homework (by: Jan 29 2026)
 ____________________________________________________________
 ____________________________________________________________
-Noted. pinggu.Pinggu has removed this task:
+Noted. Pinggu has removed this task:
  [T][ ] borrow book
 Now you have 3 tasks in the list.
 ____________________________________________________________
@@ -69,5 +69,5 @@ Here are the tasks in your list:
 3.[D][ ] do homework (by: Jan 29 2026)
 ____________________________________________________________
 ____________________________________________________________
-Bye. pinggu.Pinggu hopes to see you again soon!
+Bye. Pinggu hopes to see you again soon!
 ____________________________________________________________
