@@ -140,4 +140,20 @@ public class Ui {
         System.out.println(task.toString());
         showDivider();
     }
+
+    /**
+     * Displays list of tasks with the keyword.
+     *
+     * @param tasks TaskList containing our filtered tasks with the keyword.
+     */
+    public void showFind(TaskList tasks) {
+        showDivider();
+        System.out.println("Here are the matching tasks in your list:");
+        int counter = 1;
+        for (Task task : tasks.getTasks()) {
+            System.out.println(counter + "." + task.toString());
+            counter++;
+        }
+        showDivider();
+    }
 }

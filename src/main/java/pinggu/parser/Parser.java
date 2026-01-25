@@ -23,7 +23,8 @@ public class Parser {
         TODO,
         DEADLINE,
         EVENT,
-        DELETE
+        DELETE,
+        FIND
     }
 
     /**
@@ -128,6 +129,21 @@ public class Parser {
                     + "Add /to <yyyy-mm-dd> into your description!");
         }
         return new Event(description, from, to);
+    }
+
+    /**
+     * Parses the find command to extract item to search for.
+     *
+     * @param input The user input into Ui with "find" and item to search for.
+     * @return The keyword to search for.
+     * @throws PingguException If keyword is empty.
+     */
+    public static String parseFind(String input) throws PingguException {
+        String[] inputs = input.split(" ", 2);
+        if (inputs.length < 2 || inputs[1].trim().isEmpty()) {
+            throw new PingguException("Pinggu needs something to search for!");
+        }
+        return inputs[1].trim();
     }
 
 }

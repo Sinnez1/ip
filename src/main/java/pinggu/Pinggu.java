@@ -92,6 +92,11 @@ public class Pinggu {
                     ui.showDelete(taskToDelete, tasks.getSize());
                     isModified = true;
                     break;
+                case FIND:
+                    String keyword = Parser.parseFind(input);
+                    TaskList matchingTasks = tasks.findTasks(keyword);
+                    ui.showFind(matchingTasks);
+                    break;
                 default: //catch new commands in enum that has not been implemented
                     throw new PingguException("This command is valid, but Pinggu has not learned it yet!");
                     //default ends here
