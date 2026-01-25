@@ -3,25 +3,52 @@ package pinggu.task;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TaskList that contains all the tasks.
+ */
 public class TaskList {
     private List<Task> tasks;
 
+    /**
+     * Initializes TaskList object as empty ArrayList.
+     */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
+    /**
+     * Sets TaskList with Tasks from existing save file.
+     *
+     * @param tasks The TaskList loaded from save file.
+     */
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Adds a task to TaskList.
+     *
+     * @param task The task to be added.
+     */
     public void addTask(Task task) {
         this.tasks.add(task);
     }
 
+    /**
+     * Deletes a task from TaskList given its index.
+     *
+     * @param index The index of the task to be deleted (0-indexing).
+     */
     public void deleteTask(int index) {
         this.tasks.remove(index);
     }
 
+    /**
+     * Gets a task from TaskList given its index.
+     *
+     * @param index The index of task to get (0-indexing).
+     * @return The task in TaskList with the index.
+     */
     public Task getTask(int index) {
         return this.tasks.get(index);
     }
