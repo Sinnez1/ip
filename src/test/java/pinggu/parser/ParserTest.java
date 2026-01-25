@@ -1,14 +1,15 @@
 package pinggu.parser;
 
-import org.junit.jupiter.api.Test;
-import pinggu.exception.PingguException;
-import pinggu.task.Deadline;
-
-import java.time.format.DateTimeParseException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import java.time.format.DateTimeParseException;
+
+import org.junit.jupiter.api.Test;
+
+import pinggu.exception.PingguException;
+import pinggu.task.Deadline;
 
 public class ParserTest {
 
@@ -29,7 +30,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parseCommand_invalidCommand_IllegalArgumentException() {
+    public void parseCommand_invalidCommand_illegalArgumentException() {
         String invalidCommand = "help do homework";
         assertThrows(IllegalArgumentException.class, () -> Parser.parseCommand(invalidCommand));
     }
