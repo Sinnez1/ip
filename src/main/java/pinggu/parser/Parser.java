@@ -7,8 +7,14 @@ import pinggu.task.Deadline;
 import pinggu.task.Event;
 import pinggu.task.Todo;
 
+/**
+ * Handles user commands.
+ */
 public class Parser {
 
+    /**
+     * List of valid commands.
+     */
     public enum Commands {
         BYE,
         LIST,
@@ -20,18 +26,38 @@ public class Parser {
         DELETE
     }
 
+    /**
+     * Parses the user String input into a Command.
+     *
+     * @param input The user input into Ui.
+     * @return Commands from enum.
+     * @throws IllegalArgumentException If input does not match commands in enum Commands.
+     */
     public static Commands parseCommand(String input) throws IllegalArgumentException {
         String[] split = input.split(" ");
         String command = split[0];
         return Commands.valueOf(command.toUpperCase());
     }
 
+    /**
+     * Parses user input to get an integer.
+     *
+     * @param input The user input into Ui.
+     * @return An integer in 0-indexing format.
+     */
     public static int parseIndex(String input) {
         String[] split = input.split(" ");
         return Integer.parseInt(split[1]) - 1;
     }
 
-    public static Todo createTodo(String input) throws PingguException, DateTimeParseException {
+    /**
+     * Creates a Todo object with task description.
+     *
+     * @param input The user input into Ui with todo and task description.
+     * @return Todo item.
+     * @throws PingguException If there is no task description.
+     */
+    public static Todo createTodo(String input) throws PingguException {
         if (input.trim().equals("todo")) { //remove white space and check string equality
             throw new PingguException("Pinggu needs a task to remind you of!");
         }
@@ -39,6 +65,14 @@ public class Parser {
         return new Todo(description);
     }
 
+    /**
+     * Creates a Deadline object with task description and due date.
+     *
+     * @param input The user input into Ui with deadline, task description and due date.
+     * @return Deadline object with task description and due date.
+     * @throws PingguException If task description is empty or if there is no due date.
+     * @throws DateTimeParseException If due date is not written in yyyy-mm-dd format.
+     */
     public static Deadline createDeadline(String input) throws PingguException, DateTimeParseException {
         if (input.trim().equals("deadline")) { //remove white space and check string equality
             throw new PingguException("Pinggu needs a deadline task description!");
@@ -60,6 +94,14 @@ public class Parser {
         return new Deadline(description, by);
     }
 
+    /**
+     * Creates an Event object with task description, start date and end date.
+     *
+     * @param input The user input into Ui with event description, start date and end date.
+     * @return An Event object with task description, start date and end date.
+     * @throws PingguException If task description is empty, or if there is no start and end date.
+     * @throws DateTimeParseException If start and end dates are not in yyyy-mm-dd format.
+     */
     public static Event createEvent(String input) throws PingguException, DateTimeParseException {
         if (input.trim().equals("event")) {
             throw new PingguException("Pinggu needs an event description!");

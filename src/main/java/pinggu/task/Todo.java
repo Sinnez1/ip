@@ -1,6 +1,15 @@
 package pinggu.task;
 
+/**
+ * Represents a Todo item.
+ */
 public class Todo extends Task {
+
+    /**
+     * Initializes a Todo object.
+     *
+     * @param description Description of task to be done.
+     */
     public Todo(String description) {
         super(description);
     }

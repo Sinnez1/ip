@@ -3,10 +3,20 @@ package pinggu.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents Event object with description, start and end date.
+ */
 public class Event extends Task {
     protected LocalDate from;
     protected LocalDate to;
 
+    /**
+     * Initializes Event object with a description, start and end date.
+     *
+     * @param description The description of the event.
+     * @param from The start date of the event.
+     * @param to The end date of the event.
+     */
     public Event(String description, String from, String to) {
         super(description);
         //expects yyyy-mm-dd format
