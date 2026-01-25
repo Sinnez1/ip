@@ -9,13 +9,20 @@ import pinggu.task.Task;
 import pinggu.task.TaskList;
 import pinggu.ui.Ui;
 
+/**
+ * Main class for Pinggu application to run the chat app.
+ */
 public class Pinggu {
     public static final String FILEPATH = "./data/pinggu.txt";
     private TaskList tasks;
     private Storage storage;
     private Ui ui;
 
-
+    /**
+     * Initializes chat app with the given file path.
+     *
+     * @param filePath The file path to store and load save file from.
+     */
     public Pinggu(String filePath) {
         ui = new Ui();
         storage = new Storage(FILEPATH);
@@ -27,6 +34,9 @@ public class Pinggu {
         }
     }
 
+    /**
+     * Runs and begin the chat app.
+     */
     public void run() {
         ui.showWelcome();
 
@@ -104,6 +114,11 @@ public class Pinggu {
         }
     }
 
+    /**
+     * Main entry point for Pinggu application.
+     *
+     * @param args None.
+     */
     public static void main(String[] args) {
         new Pinggu(FILEPATH).run();
     }
