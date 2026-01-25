@@ -36,8 +36,9 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "duke"
+    archiveBaseName = "pinggu"
     archiveClassifier = null
+    archiveFileName = 'pinggu.jar'
 }
 
 run {
