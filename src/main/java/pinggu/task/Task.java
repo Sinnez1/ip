@@ -1,7 +1,7 @@
 package pinggu.task;
 
 /**
- * Task class to present the different Tasks.
+ * Represents Task in TaskList.
  */
 public class Task {
     protected String description;

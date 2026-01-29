@@ -46,23 +46,32 @@ public class TaskList {
     /**
      * Gets a task from TaskList given its index.
      *
-     * @param index The index of task to get (0-indexing).
+     * @param index The index of task to retrieve (0-indexing).
      * @return The task in TaskList with the index.
      */
     public Task getTask(int index) {
         return this.tasks.get(index);
     }
 
+    /**
+     * Returns size of TaskList.
+     *
+     * @return Size of TaskList.
+     */
     public int getSize() {
         return this.tasks.size();
     }
 
+    /**
+     * Returns all tasks in TaskList.
+     * @return Tasks in TaskList.
+     */
     public List<Task> getTasks() {
         return tasks;
     }
 
     /**
-     * Find tasks in TaskList containing the specific keyword in their description.
+     * Finds tasks in TaskList containing the specific keyword in their description.
      *
      * @param keyword The String containing keyword to search for in description.
      * @return A new TaskList containing only tasks with the keyword.

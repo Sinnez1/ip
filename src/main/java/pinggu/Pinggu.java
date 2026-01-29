@@ -10,7 +10,7 @@ import pinggu.task.TaskList;
 import pinggu.ui.Ui;
 
 /**
- * Main class for Pinggu application to run the chat app.
+ * Runs Pinggu chat app.
  */
 public class Pinggu {
     public static final String FILEPATH = "./data/pinggu.txt";
@@ -35,7 +35,7 @@ public class Pinggu {
     }
 
     /**
-     * Runs and begin the chat app.
+     * Runs the chat app.
      */
     public void run() {
         ui.showWelcome();
@@ -120,7 +120,7 @@ public class Pinggu {
     }
 
     /**
-     * Main entry point for Pinggu application.
+     * Starts the chat app.
      *
      * @param args None.
      */

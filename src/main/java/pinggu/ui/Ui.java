@@ -105,7 +105,7 @@ public class Ui {
     }
 
     /**
-     *  Displays message to show Task is added and new number of tasks in TaskList.
+     * Displays message to show Task is added and new number of tasks in TaskList.
      *
      * @param task The Task object to be added.
      * @param size The new number of tasks in TaskList.
