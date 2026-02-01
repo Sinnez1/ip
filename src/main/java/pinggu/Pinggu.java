@@ -26,7 +26,7 @@ public class Pinggu {
      */
     public Pinggu(String filePath) {
         ui = new Ui();
-        storage = new Storage(FILEPATH);
+        storage = new Storage(".", "data", "pinggu.txt");
         try {
             tasks = new TaskList(storage.load());
         } catch (PingguException e) {

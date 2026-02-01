@@ -24,8 +24,8 @@ public class Storage {
      *
      * @param filePath The file path to store and load from.
      */
-    public Storage(String filePath) {
-        this.filePath = filePath;
+    public Storage(String... filePath) {
+        this.filePath = String.join(File.separator, filePath);
     }
 
     /**
