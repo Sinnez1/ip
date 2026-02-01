@@ -47,7 +47,7 @@ checkstyle {
 }
 
 application {
-    mainClass.set("pinggu.Pinggu")
+    mainClass.set("pinggu.ui.PingguGuiLauncher")
 }
 
 shadowJar {
