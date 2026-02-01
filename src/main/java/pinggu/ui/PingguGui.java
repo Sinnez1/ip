@@ -3,23 +3,21 @@ package pinggu.ui;
 import javafx.application.Application;
 
 import javafx.scene.Scene;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-
 import javafx.scene.image.Image;
-
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-
 import javafx.stage.Stage;
+import pinggu.Pinggu;
 
 public class PingguGui extends Application {
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image pingguImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Pinggu pinggu = new Pinggu(Pinggu.FILEPATH);
 
     private ScrollPane scrollPane;
     private VBox dialogContainer;
@@ -29,6 +27,8 @@ public class PingguGui extends Application {
 
     @Override
     public void start(Stage stage) {
+        //Setting up required components
+
         scrollPane = new ScrollPane();
         dialogContainer = new VBox();
         scrollPane.setContent(dialogContainer);
@@ -36,14 +36,16 @@ public class PingguGui extends Application {
         userInput = new TextField();
         sendButton = new Button("Send");
 
-        DialogBox dialogBox = new DialogBox("Hello", userImage);
-        dialogContainer.getChildren().addAll(dialogBox);
-
         AnchorPane mainLayout = new AnchorPane();
         mainLayout.getChildren().addAll(scrollPane, userInput, sendButton);
 
+        scene = new Scene(mainLayout);
 
-        stage.setTitle("Duke");
+        stage.setScene(scene);
+        stage.show();
+
+        //Formatting the window to look as expected
+        stage.setTitle("Pinggu");
         stage.setResizable(false);
         stage.setMinHeight(600.0);
         stage.setMinWidth(400.0);
@@ -71,10 +73,32 @@ public class PingguGui extends Application {
         AnchorPane.setLeftAnchor(userInput, 1.0);
         AnchorPane.setBottomAnchor(userInput, 1.0);
 
-        scene = new Scene(mainLayout);
+        //Handling user input
 
-        stage.setScene(scene);
-        stage.show();
+        sendButton.setOnMouseClicked((event) -> {
+            handleUserInput();
+        });
+        userInput.setOnAction((event) -> {
+            handleUserInput();
+        });
 
+        dialogContainer.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
+
+
+
+    }
+
+    /**
+     * Creates a dialog box containing user input, and appends it to
+     * the dialog container. Clears the user input after processing.
+     */
+    private void handleUserInput() {
+        String userText = userInput.getText();
+        String pingguText = pinggu.getResponse(userText);
+        dialogContainer.getChildren().addAll(
+                DialogBox.getUserDialog(userText, userImage),
+                DialogBox.getPingguDialog(pingguText, pingguImage)
+        );
+        userInput.clear();
     }
 }
