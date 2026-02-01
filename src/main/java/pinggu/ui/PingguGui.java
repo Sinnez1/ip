@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import pinggu.Pinggu;
 
 /**
- * A GUI for Duke using FXML.
+ * A GUI for Pinggu using FXML.
  */
 public class PingguGui extends Application {
 
