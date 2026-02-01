@@ -1,5 +1,7 @@
 package pinggu.ui;
 
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import pinggu.Pinggu;
 
 /**
@@ -24,17 +27,25 @@ public class MainWindow extends AnchorPane {
 
     private Pinggu pinggu;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image pingguImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Teemo.png"));
+    private Image pingguImage = new Image(this.getClass().getResourceAsStream("/images/Pinggu.png"));
 
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Duke instance */
+    /**
+     * Injects the Pinggu instance
+     */
     public void setPinggu(Pinggu p) {
         pinggu = p;
+        if (pinggu.getIsLoadError()) {
+            dialogContainer.getChildren().add(
+                    DialogBox.getPingguDialog("Error loading file. Starting with empty task list.", pingguImage));
+        }
+
+        dialogContainer.getChildren().addAll(DialogBox.getPingguDialog(pinggu.getWelcomeMessage(), pingguImage));
     }
 
     /**
@@ -44,11 +55,18 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = pinggu.getResponse(input);
+        String response = pinggu.run(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getPingguDialog(response, pingguImage)
         );
         userInput.clear();
+
+        if (input.equals("bye")) {
+            PauseTransition delay = new PauseTransition(Duration.seconds(3));
+            delay.setOnFinished(event -> Platform.exit());
+            delay.play();
+        }
     }
+
 }
