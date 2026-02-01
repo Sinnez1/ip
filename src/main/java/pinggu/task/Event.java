@@ -32,7 +32,7 @@ public class Event extends Task {
     }
 
     @Override
-    public String toSaveFile() {
+    public String toStringInSaveFile() {
         return "E | " + (isDone ? "1" : "0") + " | " + this.description + " | " + this.from + " | " + this.to;
     }
 }

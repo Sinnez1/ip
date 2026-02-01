@@ -46,7 +46,7 @@ public class Parser {
      * @param input The user input into Ui.
      * @return An integer in 0-indexing format.
      */
-    public static int parseIndex(String input) {
+    public static int parseInputIndex(String input) {
         String[] split = input.split(" ");
         return Integer.parseInt(split[1]) - 1;
     }
@@ -138,7 +138,7 @@ public class Parser {
      * @return The keyword to search for.
      * @throws PingguException If keyword is empty.
      */
-    public static String parseFind(String input) throws PingguException {
+    public static String parseFindKeyword(String input) throws PingguException {
         String[] inputs = input.split(" ", 2);
         if (inputs.length < 2 || inputs[1].trim().isEmpty()) {
             throw new PingguException("Pinggu needs something to search for!");

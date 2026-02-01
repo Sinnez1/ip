@@ -38,64 +38,64 @@ public class Pinggu {
      * Runs the chat app.
      */
     public void run() {
-        ui.showWelcome();
+        ui.showWelcomeMessage();
 
         while (true) {
-            String input = ui.readLine();
+            String input = ui.readNextLine();
             boolean isModified = false; //check if we changed our task;
 
             try {
                 Parser.Commands cmd = Parser.parseCommand(input); //returns enum, will throw IllegalArgumentException
                 switch (cmd) {
                 case BYE:
-                    ui.showExit();
+                    ui.showExitMessage();
                     return;
                 case LIST:
                     ui.printTaskList(tasks);
                     break;
                 case MARK:
-                    int markIndex = Parser.parseIndex(input);
+                    int markIndex = Parser.parseInputIndex(input);
                     Task taskToMark = tasks.getTask(markIndex); //throws error if out of bounds
-                    taskToMark.markTask();
-                    ui.markTask(taskToMark);
+                    taskToMark.setDone();
+                    ui.showMarkTaskMessage(taskToMark);
                     isModified = true;
                     break;
                 case UNMARK:
-                    int unmarkIndex = Parser.parseIndex(input);
+                    int unmarkIndex = Parser.parseInputIndex(input);
                     Task taskToUnmark = tasks.getTask(unmarkIndex); //throws error if out of bounds
-                    taskToUnmark.unmarkTask();
-                    ui.unmarkTask(taskToUnmark);
+                    taskToUnmark.setNotDone();
+                    ui.showUnmarkTaskMessage(taskToUnmark);
                     isModified = true;
                     break;
                 case TODO:
                     Task todo = Parser.createTodo(input);
                     tasks.addTask(todo);
-                    ui.showAdd(todo, tasks.getSize());
+                    ui.showAddMessage(todo, tasks.getSize());
                     isModified = true;
                     break;
                 case DEADLINE:
                     Task deadLine = Parser.createDeadline(input);
                     tasks.addTask(deadLine);
-                    ui.showAdd(deadLine, tasks.getSize());
+                    ui.showAddMessage(deadLine, tasks.getSize());
                     isModified = true;
                     break;
                 case EVENT:
                     Task event = Parser.createEvent(input);
                     tasks.addTask(event);
-                    ui.showAdd(event, tasks.getSize());
+                    ui.showAddMessage(event, tasks.getSize());
                     isModified = true;
                     break;
                 case DELETE:
-                    int deleteIndex = Parser.parseIndex(input);
+                    int deleteIndex = Parser.parseInputIndex(input);
                     Task taskToDelete = tasks.getTask(deleteIndex); //throws error if out of bounds
                     tasks.deleteTask(deleteIndex);
-                    ui.showDelete(taskToDelete, tasks.getSize());
+                    ui.showDeleteMessage(taskToDelete, tasks.getSize());
                     isModified = true;
                     break;
                 case FIND:
-                    String keyword = Parser.parseFind(input);
+                    String keyword = Parser.parseFindKeyword(input);
                     TaskList matchingTasks = tasks.findTasks(keyword);
-                    ui.showFind(matchingTasks);
+                    ui.showFindMessage(matchingTasks);
                     break;
                 default: //catch new commands in enum that has not been implemented
                     throw new PingguException("This command is valid, but Pinggu has not learned it yet!");

@@ -23,7 +23,7 @@ public class Ui {
     /**
      * Displays welcome message when program is run.
      */
-    public void showWelcome() {
+    public void showWelcomeMessage() {
         String text = DIVIDER + "\n"
                 + "Hello! I'm Pinggu.\n"
                 + "What can I do for you?\n"
@@ -36,7 +36,7 @@ public class Ui {
      *
      * @return The String command input from user.
      */
-    public String readLine() {
+    public String readNextLine() {
         return scanner.nextLine();
     }
 
@@ -50,7 +50,7 @@ public class Ui {
     /**
      * Displays exit message when user quits the program.
      */
-    public void showExit() {
+    public void showExitMessage() {
         String output = DIVIDER + "\n"
                 + "Bye. Pinggu hopes to see you again soon!\n"
                 + DIVIDER;
@@ -97,7 +97,7 @@ public class Ui {
      * @param task The task object to be deleted.
      * @param size The number of remaining Tasks in TaskList.
      */
-    public void showDelete(Task task, int size) {
+    public void showDeleteMessage(Task task, int size) {
         String msg = "Noted. Pinggu has removed this task:\n"
                 + " " + task.toString() + "\n"
                 + "Now you have " + size + " tasks in the list.";
@@ -110,7 +110,7 @@ public class Ui {
      * @param task The Task object to be added.
      * @param size The new number of tasks in TaskList.
      */
-    public void showAdd(Task task, int size) {
+    public void showAddMessage(Task task, int size) {
         String msg = "Got it. Pinggu has added this task:\n"
                 + " " + task.toString() + "\n"
                 + "Now you have " + size + " tasks in the list.";
@@ -122,7 +122,7 @@ public class Ui {
      *
      * @param task The task to be marked as done.
      */
-    public void markTask(Task task) {
+    public void showMarkTaskMessage(Task task) {
         showDivider();
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(task.toString());
@@ -134,7 +134,7 @@ public class Ui {
      *
      * @param task The task to be marked as not done.
      */
-    public void unmarkTask(Task task) {
+    public void showUnmarkTaskMessage(Task task) {
         showDivider();
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(task.toString());
@@ -146,7 +146,7 @@ public class Ui {
      *
      * @param tasks TaskList containing our filtered tasks with the keyword.
      */
-    public void showFind(TaskList tasks) {
+    public void showFindMessage(TaskList tasks) {
         showDivider();
         System.out.println("Here are the matching tasks in your list:");
         int counter = 1;

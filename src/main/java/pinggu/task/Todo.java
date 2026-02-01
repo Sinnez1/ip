@@ -20,7 +20,7 @@ public class Todo extends Task {
     }
 
     @Override
-    public String toSaveFile() {
+    public String toStringInSaveFile() {
         return "T | " + (isDone ? "1" : "0") + " | " + this.description;
     }
 }

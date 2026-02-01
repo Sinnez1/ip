@@ -29,14 +29,14 @@ public class Task {
     /**
      * Sets a task to be done.
      */
-    public void markTask() {
+    public void setDone() {
         this.isDone = true;
     }
 
     /**
      * Sets a task to be not done.
      */
-    public void unmarkTask() {
+    public void setNotDone() {
         this.isDone = false;
     }
 
@@ -50,7 +50,7 @@ public class Task {
      *
      * @return String description of Task to be saved in save file.
      */
-    public String toSaveFile() {
+    public String toStringInSaveFile() {
         return "pinggu.task.Task | " + (isDone ? "1" : "0") + " | " + this.description;
     }
 }

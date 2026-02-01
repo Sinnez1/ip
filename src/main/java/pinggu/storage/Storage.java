@@ -74,7 +74,7 @@ public class Storage {
     public void save(List<Task> tasks) {
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             for (Task task : tasks) {
-                fileWriter.write(task.toSaveFile() + "\n");
+                fileWriter.write(task.toStringInSaveFile() + "\n");
             }
         } catch (IOException e) {
             System.out.println("Error saving file" + e.getMessage());
@@ -104,7 +104,7 @@ public class Storage {
             return null;
         }
         if (isDone) {
-            task.markTask();
+            task.setDone();
         }
         return task;
     }
