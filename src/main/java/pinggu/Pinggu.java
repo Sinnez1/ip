@@ -35,10 +35,20 @@ public class Pinggu {
         }
     }
 
+    /**
+     * Displays welcome message to user.
+     *
+     * @return Welcome message.
+     */
     public String getWelcomeMessage() {
         return ui.showWelcomeMessage();
     }
 
+    /**
+     * Returns a Boolean to indicate if save file was loaded successfully.
+     *
+     * @return Boolean value indicating loading status.
+     */
     public boolean getIsLoadError() {
         return isLoadError;
     }

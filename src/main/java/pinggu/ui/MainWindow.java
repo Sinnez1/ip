@@ -30,13 +30,16 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Teemo.png"));
     private Image pingguImage = new Image(this.getClass().getResourceAsStream("/images/Pinggu.png"));
 
+    /**
+     * Initializes scrollPane.
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
     /**
-     * Injects the Pinggu instance
+     * Injects the Pinggu instance.
      */
     public void setPinggu(Pinggu p) {
         pinggu = p;
@@ -49,8 +52,9 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
+     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply.
+     * Appends them to the dialog container.
+     * Clears the user input after processing.
      */
     @FXML
     private void handleUserInput() {
