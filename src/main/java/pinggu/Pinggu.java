@@ -18,6 +18,7 @@ public class Pinggu {
     private Storage storage;
     private Ui ui;
     private boolean isLoadError = false;
+    private String commandType;
 
     /**
      * Initializes chat app with the given file path.
@@ -58,6 +59,7 @@ public class Pinggu {
      */
     public String run(String input) {
         try {
+            commandType = "default"; // needs to come before Parser else it will be skipped on illegal commands
             Parser.Commands cmd = Parser.parseCommand(input); //returns enum, will throw IllegalArgumentException
             String response = "";
             boolean isModified = false; //check if we changed our task;
@@ -73,6 +75,7 @@ public class Pinggu {
                 taskToMark.setDone();
                 response = ui.showMarkTaskMessage(taskToMark);
                 isModified = true;
+                commandType = cmd.name();
                 break;
             case UNMARK:
                 int unmarkIndex = Parser.parseInputIndex(input);
@@ -86,18 +89,21 @@ public class Pinggu {
                 tasks.addTask(todo);
                 response = ui.showAddMessage(todo, tasks.getSize());
                 isModified = true;
+                commandType = "add";
                 break;
             case DEADLINE:
                 Task deadLine = Parser.createDeadline(input);
                 tasks.addTask(deadLine);
                 response = ui.showAddMessage(deadLine, tasks.getSize());
                 isModified = true;
+                commandType = "add";
                 break;
             case EVENT:
                 Task event = Parser.createEvent(input);
                 tasks.addTask(event);
                 response = ui.showAddMessage(event, tasks.getSize());
                 isModified = true;
+                commandType = "add";
                 break;
             case DELETE:
                 int deleteIndex = Parser.parseInputIndex(input);
@@ -105,6 +111,7 @@ public class Pinggu {
                 tasks.deleteTask(deleteIndex);
                 response = ui.showDeleteMessage(taskToDelete, tasks.getSize());
                 isModified = true;
+                commandType = cmd.name();
                 break;
             case FIND:
                 String keyword = Parser.parseFindKeyword(input);
@@ -119,17 +126,26 @@ public class Pinggu {
             }
             return response;
         } catch (NumberFormatException e) { //has to come before IllegalArgumentException as it extends that
-            return ui.showErrorMessage(" Pinggu needs a valid number!");
+            return ui.showErrorMessage("Pinggu needs a valid number!");
         } catch (IllegalArgumentException e) {
-            return ui.showErrorMessage(" Pinggu does not recognize this command!");
+            return ui.showErrorMessage("Pinggu does not recognize this command!");
         } catch (PingguException e) {
             return ui.showErrorMessage(e.getMessage());
         } catch (IndexOutOfBoundsException e) {
-            return ui.showErrorMessage(" Pinggu does not have this task number! "
+            return ui.showErrorMessage("Pinggu does not have this task number! "
                     + "The max is " + tasks.getSize() + ".");
         } catch (DateTimeParseException e) {
-            return ui.showErrorMessage(" Pinggu needs a valid date of <yyyy-mm-dd>!");
+            return ui.showErrorMessage("Pinggu needs a valid date of <yyyy-mm-dd>!");
         }
+    }
+
+    /**
+     * Gets the command type.
+     *
+     * @return Command type.
+     */
+    public String getCommandType() {
+        return commandType;
     }
 }
 

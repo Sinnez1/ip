@@ -80,7 +80,7 @@ public class Parser {
         }
         int byDate = input.indexOf("/by");
         if (byDate == -1) { //cannot find a due date
-            throw new PingguException("Pinggu needs a due date! "
+            throw new PingguException(" Pinggu needs a due date! "
                     + "Add /by <yyyy-mm-dd> into your description!");
         }
         String description = input.substring(9, byDate).trim();

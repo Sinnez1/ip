@@ -1,3 +1,4 @@
-T | 0 | dance
-T | 0 | book
-D | 0 | read book | 2026-01-25
+T | 0 | ip
+T | 0 | kill myself
+T | 0 | cry
+D | 0 | kill myself | 2026-01-06

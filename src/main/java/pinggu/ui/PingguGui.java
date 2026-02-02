@@ -23,6 +23,8 @@ public class PingguGui extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+            stage.setMinHeight(650); //prevents welcome message from becoming hidden
+            stage.setMinWidth(417);
             fxmlLoader.<MainWindow>getController().setPinggu(pinggu); // inject the Pinggu instance
             stage.show();
         } catch (IOException e) {

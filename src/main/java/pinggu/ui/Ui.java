@@ -29,7 +29,7 @@ public class Ui {
      * Displays exit message when user quits the program.
      */
     public String showExitMessage() {
-        return format("Bye. Pinggu hopes to see you again soon!", "Exiting in 3 seconds.");
+        return format("Bye! Pinggu hopes to see you again soon!", "Exiting in 3 seconds.");
     }
 
     /**
@@ -118,6 +118,6 @@ public class Ui {
      * @return Error message.
      */
     public String showErrorMessage(String message) {
-        return "Noot noot!" + message;
+        return "Noot noot! " + message;
     }
 }

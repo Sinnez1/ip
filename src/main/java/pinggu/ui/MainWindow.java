@@ -1,5 +1,7 @@
 package pinggu.ui;
 
+import org.w3c.dom.Text;
+
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -49,6 +51,7 @@ public class MainWindow extends AnchorPane {
         }
 
         dialogContainer.getChildren().addAll(DialogBox.getPingguDialog(pinggu.getWelcomeMessage(), pingguImage));
+
     }
 
     /**
@@ -60,9 +63,10 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = pinggu.run(input);
+        String commandType = pinggu.getCommandType();
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getPingguDialog(response, pingguImage)
+                DialogBox.getPingguDialog(response, pingguImage, commandType)
         );
         userInput.clear();
 

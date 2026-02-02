@@ -38,6 +38,26 @@ public class DialogBox extends HBox {
         displayPicture.setImage(img);
     }
 
+    private void changeDialogStyle(String commandType) {
+        if (commandType.equals("default")) {
+            return;
+        }
+        switch(commandType) {
+        case "add":
+            dialog.getStyleClass().add("add-label");
+            break;
+        case "MARK":
+            dialog.getStyleClass().add("marked-label");
+            break;
+        case "DELETE":
+            dialog.getStyleClass().add("delete-label");
+            break;
+        default:
+            // Do nothing
+        }
+    }
+
+
     /**
      * Flips the dialog box such that the ImageView is on the left and text on the right.
      */
@@ -46,6 +66,7 @@ public class DialogBox extends HBox {
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);
+        dialog.getStyleClass().add("reply-label");
     }
 
     /**
@@ -69,6 +90,21 @@ public class DialogBox extends HBox {
     public static DialogBox getPingguDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
+        return db;
+    }
+
+    /**
+     * Returns DialogBox with different CSS styles for add, mark and delete commands.
+     *
+     * @param text Text to be output by Pinggu.
+     * @param img Pinggu image.
+     * @param commandType Command that is input by user.
+     * @return DialogBox with different CSS styles for add, mark and delete commands.
+     */
+    public static DialogBox getPingguDialog(String text, Image img, String commandType) {
+        var db = new DialogBox(text, img);
+        db.flip();
+        db.changeDialogStyle(commandType);
         return db;
     }
 }
