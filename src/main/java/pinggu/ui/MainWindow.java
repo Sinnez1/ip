@@ -1,7 +1,5 @@
 package pinggu.ui;
 
-import org.w3c.dom.Text;
-
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;

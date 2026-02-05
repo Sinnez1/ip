@@ -2,3 +2,4 @@ T | 0 | ip
 T | 0 | kill myself
 T | 0 | cry
 D | 0 | kill myself | 2026-01-06
+E | 0 | CS2103T Wk 4 | 2026-02-02 | 2026-02-06
