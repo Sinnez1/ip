@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class Deadline extends Task {
 
-    protected LocalDate by;
+    private LocalDate by;
 
     /**
      * Initializes a Deadline object with description and a due date.
@@ -29,7 +29,7 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String toStringInSaveFile() {
-        return "D | " + (isDone ? "1" : "0") + " | " + this.description + " | " + this.by;
+    public String toFileString() {
+        return "D | " + (getIsDone() ? "1" : "0") + " | " + getDescription() + " | " + this.by;
     }
 }

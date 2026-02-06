@@ -81,7 +81,7 @@ public class TaskList {
     public TaskList findTasks(String keyword) {
         List<Task> filteredTasks = new ArrayList<>();
         for (Task task : this.tasks) {
-            if (task.description.contains(keyword)) {
+            if (task.getDescription().contains(keyword)) {
                 filteredTasks.add(task);
             }
         }

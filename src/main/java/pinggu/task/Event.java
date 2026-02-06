@@ -7,8 +7,8 @@ import java.time.format.DateTimeFormatter;
  * Represents Event object with description, start and end date.
  */
 public class Event extends Task {
-    protected LocalDate from;
-    protected LocalDate to;
+    private LocalDate from;
+    private LocalDate to;
 
     /**
      * Initializes Event object with a description, start and end date.
@@ -32,7 +32,7 @@ public class Event extends Task {
     }
 
     @Override
-    public String toStringInSaveFile() {
-        return "E | " + (isDone ? "1" : "0") + " | " + this.description + " | " + this.from + " | " + this.to;
+    public String toFileString() {
+        return "E | " + (getIsDone() ? "1" : "0") + " | " + getDescription() + " | " + this.from + " | " + this.to;
     }
 }

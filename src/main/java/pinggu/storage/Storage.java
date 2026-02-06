@@ -17,15 +17,15 @@ import pinggu.task.Todo;
  * Handles loading tasks and saving tasks to file specified in file path.
  */
 public class Storage {
-    private final String filePath;
+    private final String filePaths;
 
     /**
      * Initializes Storage object with the given file path.
      *
-     * @param filePath The file path to store and load from.
+     * @param filePaths The file path to store and load from.
      */
-    public Storage(String... filePath) {
-        this.filePath = String.join(File.separator, filePath);
+    public Storage(String... filePaths) {
+        this.filePaths = String.join(File.separator, filePaths);
     }
 
     /**
@@ -37,7 +37,7 @@ public class Storage {
      */
     public List<Task> load() throws PingguException {
         List<Task> tasks = new ArrayList<>();
-        File file = new File(filePath);
+        File file = new File(filePaths);
         if (file.exists()) {
             try (Scanner scanner = new Scanner(file)) {
                 while (scanner.hasNextLine()) {
@@ -72,9 +72,9 @@ public class Storage {
      * @param tasks The TaskList object to save into save file.
      */
     public void save(List<Task> tasks) {
-        try (FileWriter fileWriter = new FileWriter(filePath)) {
+        try (FileWriter fileWriter = new FileWriter(filePaths)) {
             for (Task task : tasks) {
-                fileWriter.write(task.toStringInSaveFile() + "\n");
+                fileWriter.write(task.toFileString() + "\n");
             }
         } catch (IOException e) {
             System.out.println("Error saving file" + e.getMessage());

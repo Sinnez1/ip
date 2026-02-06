@@ -18,7 +18,7 @@ public class TaskListTest {
 
         @Override
         public String toString() {
-            return "This is " + this.description;
+            return "This is " + getDescription();
         }
     }
 

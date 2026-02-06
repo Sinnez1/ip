@@ -4,8 +4,8 @@ package pinggu.task;
  * Represents Task in TaskList.
  */
 public class Task {
-    protected String description;
-    protected boolean isDone;
+    private String description;
+    private boolean isDone;
 
     /**
      * Initializes Task object with description.
@@ -50,7 +50,25 @@ public class Task {
      *
      * @return String description of Task to be saved in save file.
      */
-    public String toStringInSaveFile() {
-        return "pinggu.task.Task | " + (isDone ? "1" : "0") + " | " + this.description;
+    public String toFileString() {
+        return "Task | " + (isDone ? "1" : "0") + " | " + this.description;
+    }
+
+    /**
+     * Returns task description.
+     *
+     * @return Task description.
+     */
+    public String getDescription() {
+        return this.description;
+    }
+
+    /**
+     * Returns whether a task is done.
+     *
+     * @return True if task is completed, false otherwise.
+     */
+    public boolean getIsDone() {
+        return this.isDone;
     }
 }

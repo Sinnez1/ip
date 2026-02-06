@@ -114,7 +114,7 @@ public class Ui {
     /**
      * Shows the error message.
      *
-     * @param message
+     * @param message Error message to be shown.
      * @return Error message.
      */
     public String showErrorMessage(String message) {

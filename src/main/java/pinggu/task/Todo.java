@@ -20,7 +20,7 @@ public class Todo extends Task {
     }
 
     @Override
-    public String toStringInSaveFile() {
-        return "T | " + (isDone ? "1" : "0") + " | " + this.description;
+    public String toFileString() {
+        return "T | " + (getIsDone() ? "1" : "0") + " | " + getDescription();
     }
 }
