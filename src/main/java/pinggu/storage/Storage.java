@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import pinggu.exception.PingguException;
+import pinggu.parser.Parser;
 import pinggu.task.Deadline;
 import pinggu.task.Event;
 import pinggu.task.Task;
@@ -86,18 +87,18 @@ public class Storage {
         if (parts.length < 3) {
             return null; //task is invalid
         }
-        String taskType = parts[0].trim();
+        Parser.Commands taskType = Parser.parseCommand(parts[0].trim());
         boolean isDone = parts[1].trim().equals("1");
         String taskDescription = parts[2].trim();
         Task task;
         switch (taskType) {
-        case "T":
+        case TODO:
             task = new Todo(taskDescription);
             break;
-        case "D":
+        case DEADLINE:
             task = new Deadline(taskDescription, parts[3].trim());
             break;
-        case "E":
+        case EVENT:
             task = new Event(taskDescription, parts[3].trim(), parts[4].trim());
             break;
         default:

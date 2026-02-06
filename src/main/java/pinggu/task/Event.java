@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import pinggu.exception.PingguException;
+import pinggu.parser.Parser;
 
 /**
  * Represents Event object with description, start and end date.
@@ -71,6 +72,6 @@ public class Event extends Task {
 
     @Override
     public String toFileString() {
-        return "E | " + (getIsDone() ? "1" : "0") + " | " + getDescription() + " | " + this.from + " | " + this.to;
+        return Parser.Commands.EVENT.name() + (getIsDone() ? "1" : "0") + " | " + getDescription() + " | " + this.from + " | " + this.to;
     }
 }

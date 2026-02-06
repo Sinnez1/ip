@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import pinggu.exception.PingguException;
+import pinggu.parser.Parser;
 
 /**
  * Represents Deadline object with description and due date.
@@ -61,6 +62,6 @@ public class Deadline extends Task {
 
     @Override
     public String toFileString() {
-        return "D | " + (getIsDone() ? "1" : "0") + " | " + getDescription() + " | " + this.by;
+        return Parser.Commands.DEADLINE.name() + (getIsDone() ? "1" : "0") + " | " + getDescription() + " | " + this.by;
     }
 }
