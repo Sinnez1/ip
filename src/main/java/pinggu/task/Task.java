@@ -71,4 +71,13 @@ public class Task {
     public boolean getIsDone() {
         return this.isDone;
     }
+
+    /**
+     * Sets the description of a task.
+     *
+     * @param description Description of task.
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

@@ -78,21 +78,8 @@ public class Parser {
         if (input.trim().equals("deadline")) { //remove white space and check string equality
             throw new PingguException("Pinggu needs a deadline task description!");
         }
-        int byDate = input.indexOf("/by");
-        if (byDate == -1) { //cannot find a due date
-            throw new PingguException(" Pinggu needs a due date! "
-                    + "Add /by <yyyy-mm-dd> into your description!");
-        }
-        String description = input.substring(9, byDate).trim();
-        String by = input.substring(byDate + 4).trim();
-        if (description.isEmpty()) {
-            throw new PingguException("Pinggu needs a description!");
-        }
-        if (by.isEmpty()) {
-            throw new PingguException("Pinggu needs a due date! "
-                    + "Add /by <yyyy-mm-dd> into your description!");
-        }
-        return new Deadline(description, by);
+        String arguments = input.substring(9).trim();
+        return new Deadline(arguments);
     }
 
     /**
