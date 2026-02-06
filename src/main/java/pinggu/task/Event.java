@@ -2,6 +2,9 @@ package pinggu.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+import pinggu.exception.PingguException;
 
 /**
  * Represents Event object with description, start and end date.
@@ -9,6 +12,41 @@ import java.time.format.DateTimeFormatter;
 public class Event extends Task {
     private LocalDate from;
     private LocalDate to;
+
+    /**
+     * Initializes Event object by parsing input.
+     *
+     * @param input Input containing task description, start date and end date.
+     * @throws PingguException If description or dates are missing.
+     * @throws DateTimeParseException If date is not in yyyy-mm-dd format.
+     */
+    public Event(String input) throws PingguException, DateTimeParseException {
+        super("");
+        int fromDate = input.indexOf("/from");
+        int toDate = input.indexOf("/to");
+        if (fromDate == -1 || toDate == -1) {
+            throw new PingguException("Pinggu needs a start and end date! "
+                    + "Your description should have /from <yyyy-mm-dd> and /to <yyyy-mm-dd>!");
+
+        }
+        String description = input.substring(0, fromDate).trim();
+        String from = input.substring(fromDate + 6, toDate).trim();
+        String to = input.substring(toDate + 4).trim();
+        if (description.isEmpty()) {
+            throw new PingguException("Pinggu needs a description!");
+        }
+        if (from.isEmpty()) {
+            throw new PingguException("Pinggu needs a start date! "
+                    + "Add /from <yyyy-mm-dd> into your description!");
+        }
+        if (to.isEmpty()) {
+            throw new PingguException("Pinggu needs a due date! "
+                    + "Add /to <yyyy-mm-dd> into your description!");
+        }
+        this.setDescription(description);
+        this.from = LocalDate.parse(from);
+        this.to = LocalDate.parse(to);
+    }
 
     /**
      * Initializes Event object with a description, start and end date.

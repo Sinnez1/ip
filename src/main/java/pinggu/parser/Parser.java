@@ -94,28 +94,8 @@ public class Parser {
         if (input.trim().equals("event")) {
             throw new PingguException("Pinggu needs an event description!");
         }
-        int fromDate = input.indexOf("/from");
-        int toDate = input.indexOf("/to");
-        if (fromDate == -1 || toDate == -1) {
-            throw new PingguException("Pinggu needs a start and end date! "
-                    + "Your description should have /from <yyyy-mm-dd> and /to <yyyy-mm-dd>!");
-
-        }
-        String description = input.substring(6, fromDate).trim();
-        String from = input.substring(fromDate + 6, toDate).trim();
-        String to = input.substring(toDate + 4).trim();
-        if (description.isEmpty()) {
-            throw new PingguException("Pinggu needs a description!");
-        }
-        if (from.isEmpty()) {
-            throw new PingguException("Pinggu needs a start date! "
-                    + "Add /from <yyyy-mm-dd> into your description!");
-        }
-        if (to.isEmpty()) {
-            throw new PingguException("Pinggu needs a due date! "
-                    + "Add /to <yyyy-mm-dd> into your description!");
-        }
-        return new Event(description, from, to);
+        String arguments = input.substring(6).trim();
+        return new Event(arguments);
     }
 
     /**

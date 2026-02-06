@@ -10,8 +10,19 @@ import org.junit.jupiter.api.Test;
 
 import pinggu.exception.PingguException;
 import pinggu.task.Deadline;
+import pinggu.task.Event;
 
 public class ParserTest {
+
+    @Test
+    public void createEvent_validInput_success() {
+        try {
+            Event event = Parser.createEvent("event return book /from 2026-01-25 /to 2026-01-26");
+            assertEquals("[E][ ] return book (from: Jan 25 2026 to: Jan 26 2026)", event.toString());
+        } catch (PingguException e) {
+            fail("No exception should be thrown" + e.getMessage());
+        }
+    }
 
     @Test
     public void createDeadline_validInput_success() {
