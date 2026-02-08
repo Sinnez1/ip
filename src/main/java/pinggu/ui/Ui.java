@@ -39,6 +39,7 @@ public class Ui {
      * @return Message showing all tasks in task list.
      */
     public String printTaskList(TaskList tasks) {
+        assert tasks != null : "TaskList to print cannot be null";
         StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
         int counter = 1;
         for (Task task : tasks.getTasks()) {
@@ -56,6 +57,7 @@ public class Ui {
      * @return Message showing that task is deleted.
      */
     public String showDeleteMessage(Task task, int size) {
+        assert task != null : "Task to show in delete message cannot be null";
         return format("Noted. Pinggu has removed this task:",
                 " " + task.toString(),
                 "Now you have " + size + " tasks in the list.");
@@ -69,6 +71,7 @@ public class Ui {
      * @return Message showing that task is added and size of task list.
      */
     public String showAddMessage(Task task, int size) {
+        assert task != null : "Task to show in add message cannot be null";
         return format("Got it. Pinggu has added this task:",
                 " " + task.toString(),
                 "Now you have " + size + " tasks in the list."
@@ -82,6 +85,7 @@ public class Ui {
      * @return Message showing that task is marked.
      */
     public String showMarkTaskMessage(Task task) {
+        assert task != null : "Task to show in mark message cannot be null";
         return format("Nice! I've marked this task as done:", task.toString());
     }
 
@@ -92,6 +96,7 @@ public class Ui {
      * @return Message that task is unmarked.
      */
     public String showUnmarkTaskMessage(Task task) {
+        assert task != null : "Task to show in unmark message cannot be null";
         return format("OK, I've marked this task as not done yet:", task.toString());
     }
 
@@ -102,6 +107,7 @@ public class Ui {
      * @return Message showing tasks with the keyword.
      */
     public String showFindMessage(TaskList tasks) {
+        assert tasks != null : "TaskList for find message cannot be null";
         StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
         int counter = 1;
         for (Task task : tasks.getTasks()) {
@@ -118,6 +124,7 @@ public class Ui {
      * @return Error message.
      */
     public String showErrorMessage(String message) {
+        assert message != null : "Error message to show cannot be null";
         return "Noot noot! " + message;
     }
 }

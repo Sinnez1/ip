@@ -15,9 +15,9 @@ import pinggu.ui.Ui;
 public class Pinggu {
     public static final String FILEPATH = "./data/pinggu.txt";
     private TaskList tasks;
-    private Storage storage;
-    private Ui ui;
-    private boolean isLoadError = false;
+    private final Storage storage;
+    private final Ui ui;
+    private boolean hasLoadError = false;
     private String commandType;
 
     /**
@@ -31,7 +31,7 @@ public class Pinggu {
         try {
             tasks = new TaskList(storage.load());
         } catch (PingguException e) {
-            this.isLoadError = true;
+            this.hasLoadError = true;
             tasks = new TaskList();
         }
     }
@@ -50,14 +50,18 @@ public class Pinggu {
      *
      * @return Boolean value indicating loading status.
      */
-    public boolean getIsLoadError() {
-        return isLoadError;
+    public boolean getHasLoadError() {
+        return hasLoadError;
     }
 
     /**
      * Runs the chat app.
      */
     public String run(String input) {
+        assert input != null : "Input must not be null";
+        assert ui != null : "Ui component must exist";
+        assert storage != null : "Storage component must exist";
+        assert tasks != null : "TaskList component must exist";
         try {
             commandType = "default"; // needs to come before Parser else it will be skipped on illegal commands
             Parser.Commands cmd = Parser.parseCommand(input); //returns enum, will throw IllegalArgumentException
@@ -72,6 +76,7 @@ public class Pinggu {
             case MARK:
                 int markIndex = Parser.parseInputIndex(input);
                 Task taskToMark = tasks.getTask(markIndex); //throws error if out of bounds
+                assert taskToMark != null : "Task to be marked must exist";
                 taskToMark.setDone();
                 response = ui.showMarkTaskMessage(taskToMark);
                 isModified = true;
@@ -80,6 +85,7 @@ public class Pinggu {
             case UNMARK:
                 int unmarkIndex = Parser.parseInputIndex(input);
                 Task taskToUnmark = tasks.getTask(unmarkIndex); //throws error if out of bounds
+                assert taskToUnmark != null : "Task to be unmarked must exist";
                 taskToUnmark.setNotDone();
                 response = ui.showUnmarkTaskMessage(taskToUnmark);
                 isModified = true;
@@ -108,6 +114,7 @@ public class Pinggu {
             case DELETE:
                 int deleteIndex = Parser.parseInputIndex(input);
                 Task taskToDelete = tasks.getTask(deleteIndex); //throws error if out of bounds
+                assert taskToDelete != null : "Task to be deleted must exist";
                 tasks.deleteTask(deleteIndex);
                 response = ui.showDeleteMessage(taskToDelete, tasks.getSize());
                 isModified = true;
@@ -116,6 +123,7 @@ public class Pinggu {
             case FIND:
                 String keyword = Parser.parseFindKeyword(input);
                 TaskList matchingTasks = tasks.findTasks(keyword);
+                assert matchingTasks != null : "Task list must exist after finding tasks";
                 return ui.showFindMessage(matchingTasks);
             default: //catch new commands in enum that has not been implemented
                 throw new PingguException("This command is valid, but Pinggu has not learned it yet!");

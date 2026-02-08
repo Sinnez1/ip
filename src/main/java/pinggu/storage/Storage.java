@@ -26,6 +26,7 @@ public class Storage {
      * @param filePaths The file path to store and load from.
      */
     public Storage(String... filePaths) {
+        assert filePaths != null : "File paths should not be null";
         this.filePaths = String.join(File.separator, filePaths);
     }
 
@@ -73,6 +74,7 @@ public class Storage {
      * @param tasks The TaskList object to save into save file.
      */
     public void save(List<Task> tasks) {
+        assert tasks != null : "TaskList to be saved to should exist";
         try (FileWriter fileWriter = new FileWriter(filePaths)) {
             for (Task task : tasks) {
                 fileWriter.write(task.toFileString() + "\n");
@@ -83,6 +85,7 @@ public class Storage {
     }
 
     private Task parseLine(String line) {
+        assert line != null : "Line from file should not be null";
         String[] parts = line.split("\\|");
         if (parts.length < 3) {
             return null; //task is invalid
@@ -96,9 +99,11 @@ public class Storage {
             task = new Todo(taskDescription);
             break;
         case DEADLINE:
+            assert parts.length >= 4 : "Deadline task in file has incorrect format";
             task = new Deadline(taskDescription, parts[3].trim());
             break;
         case EVENT:
+            assert parts.length >= 5 : "Event task in file has incorrect format";
             task = new Event(taskDescription, parts[3].trim(), parts[4].trim());
             break;
         default:

@@ -44,7 +44,7 @@ public class MainWindow extends AnchorPane {
      */
     public void setPinggu(Pinggu p) {
         pinggu = p;
-        if (pinggu.getIsLoadError()) {
+        if (pinggu.getHasLoadError()) {
             dialogContainer.getChildren().add(
                     DialogBox.getPingguDialog("Error loading file. Starting with empty task list.", pingguImage));
         }
@@ -60,6 +60,7 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleUserInput() {
+        assert pinggu != null : "Pinggu instance must exist before handling input";
         String input = userInput.getText();
         String response = pinggu.run(input);
         String commandType = pinggu.getCommandType();
