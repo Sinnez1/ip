@@ -52,7 +52,7 @@ public class Event extends Task {
     }
 
     /**
-     * Initializes Event object with a description, start and end date.
+     * Initializes Event object with a description, start and end date from save file.
      *
      * @param description The description of the event.
      * @param from The start date of the event.

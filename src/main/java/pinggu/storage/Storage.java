@@ -19,6 +19,7 @@ import pinggu.task.Todo;
  */
 public class Storage {
     private final String filePaths;
+    private boolean isNewFileCreated = false;
 
     /**
      * Initializes Storage object with the given file path.
@@ -71,8 +72,8 @@ public class Storage {
             if (file.getParentFile() != null) {
                 file.getParentFile().mkdirs();
             }
-            boolean isCreated = file.createNewFile();
-            if (isCreated) {
+            this.isNewFileCreated = file.createNewFile();
+            if (this.isNewFileCreated) {
                 System.out.println("File created at " + file.getAbsolutePath());
             }
         } catch (IOException e) {
@@ -129,5 +130,23 @@ public class Storage {
             task.setDone();
         }
         return task;
+    }
+
+    /**
+     * Returns whether a new file was created.
+     *
+     * @return True if new file was created, false otherwise.
+     */
+    public boolean isNewFileCreated() {
+        return this.isNewFileCreated;
+    }
+
+    /**
+     * Returns absolute file path of storage file.
+     *
+     * @return The absolute file path of storage file.
+     */
+    public String getFilePaths() {
+        return new File(filePaths).getAbsolutePath();
     }
 }

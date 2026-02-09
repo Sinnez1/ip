@@ -44,7 +44,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Initializes a Deadline object with description and a due date.
+     * Initializes a Deadline object with description and a due date from save file.
      *
      * @param description The description of the task.
      * @param by  The due date of task.
