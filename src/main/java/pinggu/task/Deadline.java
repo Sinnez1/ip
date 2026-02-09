@@ -67,4 +67,15 @@ public class Deadline extends Task {
         return Parser.Commands.DEADLINE.name() + " | " + (getIsDone() ? "1" : "0")
                 + " | " + getDescription() + " | " + this.by;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Deadline other)) {
+            return false;
+        }
+        return super.equals(obj) && this.by.equals(other.by);
+    }
 }

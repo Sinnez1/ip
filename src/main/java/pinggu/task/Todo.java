@@ -26,4 +26,15 @@ public class Todo extends Task {
         return Parser.Commands.TODO.name() + " | " + (getIsDone() ? "1" : "0")
                 + " | " + getDescription();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Todo todo)) {
+            return false;
+        }
+        return super.equals(obj);
+    }
 }
