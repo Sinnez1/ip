@@ -124,4 +124,16 @@ public class Ui {
         assert message != null : "Error message to show cannot be null";
         return "Noot noot! " + message;
     }
+
+    /**
+     * Displays message when user tries to add duplicate task.
+     *
+     * @param task The duplicate task to be added.
+     * @return Message that tasks already exists in TaskList.
+     */
+    public String showDuplicateTaskMessage(Task task) {
+        return format("Noot noot! This task already exists in your list:",
+                " " + task.toString(),
+                "Pinggu will not add this task.");
+    }
 }

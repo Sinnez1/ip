@@ -166,6 +166,10 @@ public class Pinggu {
             assert false;
             throw new PingguException("Unexpected add value: " + cmd); //this path should never be reached.
         }
+        if (taskList.hasDuplicate(newTask)) {
+            return ui.showDuplicateTaskMessage(newTask);
+        }
+
         taskList.addTask(newTask);
         storage.save(taskList);
         this.commandType = Constants.COMMAND_TYPE_ADD;
