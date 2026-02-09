@@ -17,6 +17,17 @@ public class Ui {
         return sb.toString();
     }
 
+    private String formatTaskList(TaskList tasks) {
+        assert tasks != null : "TaskList to print cannot be null";
+        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
+        int counter = 1;
+        for (Task task : tasks.getTasks()) {
+            sb.append(counter).append(".").append(task.toString()).append("\n");
+            counter++;
+        }
+        return sb.toString();
+    }
+
     /**
      * Displays welcome message when program is run.
      */
@@ -39,14 +50,7 @@ public class Ui {
      * @return Message showing all tasks in task list.
      */
     public String printTaskList(TaskList tasks) {
-        assert tasks != null : "TaskList to print cannot be null";
-        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
-        int counter = 1;
-        for (Task task : tasks.getTasks()) {
-            sb.append(counter).append(".").append(task.toString()).append("\n");
-            counter++;
-        }
-        return sb.toString();
+        return formatTaskList(tasks);
     }
 
     /**
@@ -107,14 +111,7 @@ public class Ui {
      * @return Message showing tasks with the keyword.
      */
     public String showFindMessage(TaskList tasks) {
-        assert tasks != null : "TaskList for find message cannot be null";
-        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
-        int counter = 1;
-        for (Task task : tasks.getTasks()) {
-            sb.append(counter).append(".").append(task.toString()).append("\n");
-            counter++;
-        }
-        return sb.toString();
+        return formatTaskList(tasks);
     }
 
     /**

@@ -2,6 +2,7 @@ package pinggu.parser;
 
 import java.time.format.DateTimeParseException;
 
+import pinggu.Constants;
 import pinggu.exception.PingguException;
 import pinggu.task.Deadline;
 import pinggu.task.Event;
@@ -66,7 +67,7 @@ public class Parser {
         if (input.trim().equals("todo")) { //remove white space and check string equality
             throw new PingguException("Pinggu needs a task to remind you of!");
         }
-        String description = input.substring(5).trim();
+        String description = input.substring(Constants.TODO_LENGTH).trim();
         return new Todo(description);
     }
 
@@ -84,7 +85,7 @@ public class Parser {
         if (input.trim().equals("deadline")) { //remove white space and check string equality
             throw new PingguException("Pinggu needs a deadline task description!");
         }
-        String arguments = input.substring(9).trim();
+        String arguments = input.substring(Constants.DEADLINE_LENGTH).trim();
         return new Deadline(arguments);
     }
 
@@ -102,7 +103,7 @@ public class Parser {
         if (input.trim().equals("event")) {
             throw new PingguException("Pinggu needs an event description!");
         }
-        String arguments = input.substring(6).trim();
+        String arguments = input.substring(Constants.EVENT_LENGTH).trim();
         return new Event(arguments);
     }
 

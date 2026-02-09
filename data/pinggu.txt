@@ -1,6 +1,4 @@
-TODO0 | ip
-TODO0 | kill myself
-TODO0 | cry
-DEADLINE0 | kill myself | 2026-01-06
-EVENT0 | CS2103T Wk 4 | 2026-02-02 | 2026-02-06
-TODO0 | ip week 5
+TODO | 1 | 0
+DEADLINE | 0 | ip | 2026-01-25
+EVENT | 0 | ip | 2026-01-25 | 2027-01-28
+TODO | 0 | check ip

@@ -23,6 +23,7 @@ public class Todo extends Task {
 
     @Override
     public String toFileString() {
-        return Parser.Commands.TODO.name() + (getIsDone() ? "1" : "0") + " | " + getDescription();
+        return Parser.Commands.TODO.name() + " | " + (getIsDone() ? "1" : "0")
+                + " | " + getDescription();
     }
 }

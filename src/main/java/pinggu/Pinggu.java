@@ -63,76 +63,7 @@ public class Pinggu {
         assert storage != null : "Storage component must exist";
         assert tasks != null : "TaskList component must exist";
         try {
-            commandType = "default"; // needs to come before Parser else it will be skipped on illegal commands
-            Parser.Commands cmd = Parser.parseCommand(input); //returns enum, will throw IllegalArgumentException
-            String response = "";
-            boolean isModified = false; //check if we changed our task;
-
-            switch (cmd) {
-            case BYE:
-                return ui.showExitMessage();
-            case LIST:
-                return ui.printTaskList(tasks);
-            case MARK:
-                int markIndex = Parser.parseInputIndex(input);
-                Task taskToMark = tasks.getTask(markIndex); //throws error if out of bounds
-                assert taskToMark != null : "Task to be marked must exist";
-                taskToMark.setDone();
-                response = ui.showMarkTaskMessage(taskToMark);
-                isModified = true;
-                commandType = cmd.name();
-                break;
-            case UNMARK:
-                int unmarkIndex = Parser.parseInputIndex(input);
-                Task taskToUnmark = tasks.getTask(unmarkIndex); //throws error if out of bounds
-                assert taskToUnmark != null : "Task to be unmarked must exist";
-                taskToUnmark.setNotDone();
-                response = ui.showUnmarkTaskMessage(taskToUnmark);
-                isModified = true;
-                break;
-            case TODO:
-                Task todo = Parser.createTodo(input);
-                tasks.addTask(todo);
-                response = ui.showAddMessage(todo, tasks.getSize());
-                isModified = true;
-                commandType = "add";
-                break;
-            case DEADLINE:
-                Task deadLine = Parser.createDeadline(input);
-                tasks.addTask(deadLine);
-                response = ui.showAddMessage(deadLine, tasks.getSize());
-                isModified = true;
-                commandType = "add";
-                break;
-            case EVENT:
-                Task event = Parser.createEvent(input);
-                tasks.addTask(event);
-                response = ui.showAddMessage(event, tasks.getSize());
-                isModified = true;
-                commandType = "add";
-                break;
-            case DELETE:
-                int deleteIndex = Parser.parseInputIndex(input);
-                Task taskToDelete = tasks.getTask(deleteIndex); //throws error if out of bounds
-                assert taskToDelete != null : "Task to be deleted must exist";
-                tasks.deleteTask(deleteIndex);
-                response = ui.showDeleteMessage(taskToDelete, tasks.getSize());
-                isModified = true;
-                commandType = cmd.name();
-                break;
-            case FIND:
-                String keyword = Parser.parseFindKeyword(input);
-                TaskList matchingTasks = tasks.findTasks(keyword);
-                assert matchingTasks != null : "Task list must exist after finding tasks";
-                return ui.showFindMessage(matchingTasks);
-            default: //catch new commands in enum that has not been implemented
-                throw new PingguException("This command is valid, but Pinggu has not learned it yet!");
-                //default ends here
-            }
-            if (isModified) {
-                storage.save(tasks.getTasks());
-            }
-            return response;
+            return executeCommand(input);
         } catch (NumberFormatException e) { //has to come before IllegalArgumentException as it extends that
             return ui.showErrorMessage("Pinggu needs a valid number!");
         } catch (IllegalArgumentException e) {
@@ -153,7 +84,94 @@ public class Pinggu {
      * @return Command type.
      */
     public String getCommandType() {
-        return commandType;
+        return this.commandType;
+    }
+
+    private String executeCommand(String input) throws PingguException, IllegalArgumentException,
+            IndexOutOfBoundsException {
+
+        // needs to come before parseCommand else it will be skipped on illegal commands
+        this.commandType = Constants.COMMAND_TYPE_DEFAULT;
+        Parser.Commands cmd = Parser.parseCommand(input); //returns enum, will throw IllegalArgumentException
+
+        switch (cmd) {
+        case BYE:
+            return ui.showExitMessage();
+        case LIST:
+            return ui.printTaskList(tasks);
+        case MARK:
+            return executeMarkCommand(input);
+        case UNMARK:
+            return executeUnmarkCommand(input);
+        case TODO:
+        case DEADLINE:
+        case EVENT:
+            return executeAddCommand(cmd, input);
+        case DELETE:
+            return executeDeleteCommand(input);
+        case FIND:
+            return executeFindCommand(input);
+        default: //catch new commands in enum that has not been implemented
+            throw new PingguException("This command is valid, but Pinggu has not learned it yet!");
+        }
+
+    }
+
+    private String executeMarkCommand(String input) throws IndexOutOfBoundsException {
+        int markIndex = Parser.parseInputIndex(input);
+        Task taskToMark = tasks.getTask(markIndex); //throws error if out of bounds
+        assert taskToMark != null : "Task to be marked must exist";
+        taskToMark.setDone();
+        storage.save(tasks.getTasks());
+        this.commandType = Parser.Commands.MARK.name();
+        return ui.showMarkTaskMessage(taskToMark);
+    }
+
+    private String executeUnmarkCommand(String input) throws IndexOutOfBoundsException {
+        int unmarkIndex = Parser.parseInputIndex(input);
+        Task taskToUnmark = tasks.getTask(unmarkIndex); //throws error if out of bounds
+        assert taskToUnmark != null : "Task to be unmarked must exist";
+        taskToUnmark.setNotDone();
+        storage.save(tasks.getTasks());
+        return ui.showUnmarkTaskMessage(taskToUnmark);
+    }
+
+    private String executeDeleteCommand(String input) throws IndexOutOfBoundsException {
+        int deleteIndex = Parser.parseInputIndex(input);
+        Task taskToDelete = tasks.getTask(deleteIndex); //throws error if out of bounds
+        assert taskToDelete != null : "Task to be deleted must exist";
+        tasks.deleteTask(deleteIndex);
+        storage.save(tasks.getTasks());
+        this.commandType = Parser.Commands.DELETE.name();
+        return ui.showDeleteMessage(taskToDelete, tasks.getSize());
+    }
+
+    private String executeAddCommand(Parser.Commands cmd, String input) throws PingguException {
+        Task newTask;
+        switch (cmd) {
+        case TODO:
+            newTask = Parser.createTodo(input);
+            break;
+        case DEADLINE:
+            newTask = Parser.createDeadline(input);
+            break;
+        case EVENT:
+            newTask = Parser.createEvent(input);
+            break;
+        default:
+            throw new PingguException("Unexpected add value: " + cmd); //this path should never be reached.
+        }
+        tasks.addTask(newTask);
+        storage.save(tasks.getTasks());
+        this.commandType = Constants.COMMAND_TYPE_ADD;
+        return ui.showAddMessage(newTask, tasks.getSize());
+    }
+
+    private String executeFindCommand(String input) throws PingguException {
+        String keyword = Parser.parseFindKeyword(input);
+        TaskList matchingTasks = tasks.findTasks(keyword);
+        assert matchingTasks != null : "Task list must exist after finding tasks";
+        return ui.showFindMessage(matchingTasks);
     }
 }
 
