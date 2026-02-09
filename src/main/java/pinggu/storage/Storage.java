@@ -3,8 +3,6 @@ package pinggu.storage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import pinggu.Constants;
@@ -40,34 +38,46 @@ public class Storage {
      * @throws PingguException If file cannot be read.
      */
     public TaskList load() throws PingguException {
-        TaskList taskList = new TaskList();
         File file = new File(filePaths);
-        if (file.exists()) {
-            try (Scanner scanner = new Scanner(file)) {
-                while (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
+        if (!file.exists()) {
+            createNewFile(file);
+            return new TaskList();
+        }
+        return readTasksFromFile(file);
+    }
+
+    private TaskList readTasksFromFile(File file) throws PingguException {
+        TaskList taskList = new TaskList();
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                try {
                     Task task = parseLine(line);
                     if (task != null) {
                         taskList.addTask(task);
                     }
+                } catch (Exception e) {
+                    System.out.println("Error parsing line" + line);
                 }
-            } catch (IOException e) {
-                throw new PingguException("Error reading file" + e.getMessage());
             }
-        } else { //file does not exist, so we make directory and file
-            try {
-                if (file.getParentFile() != null) {
-                    file.getParentFile().mkdirs();
-                }
-                boolean isCreated = file.createNewFile();
-                if (isCreated) {
-                    throw new PingguException("File created at " + file.getAbsolutePath());
-                }
-            } catch (IOException e) {
-                throw new PingguException("File can not be created" + e.getMessage());
-            }
+        } catch (Exception e) {
+            throw new PingguException("Error reading file" + e.getMessage());
         }
         return taskList;
+    }
+
+    private void createNewFile(File file) throws PingguException {
+        try {
+            if (file.getParentFile() != null) {
+                file.getParentFile().mkdirs();
+            }
+            boolean isCreated = file.createNewFile();
+            if (isCreated) {
+                System.out.println("File created at " + file.getAbsolutePath());
+            }
+        } catch (IOException e) {
+            throw new PingguException("File can not be created" + e.getMessage());
+        }
     }
 
     /**
@@ -113,7 +123,7 @@ public class Storage {
             task = new Event(taskDescription, parts[3].trim(), parts[4].trim());
             break;
         default:
-            return null;
+            return null; //no such task event should exist, so return null.
         }
         if (isDone) {
             task.setDone();
