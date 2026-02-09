@@ -25,6 +25,8 @@ public class DialogBox extends HBox {
     private ImageView displayPicture;
 
     private DialogBox(String text, Image img) {
+        assert text != null : "Text cannot be null";
+        assert img != null : "Image cannot be null";
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
@@ -53,7 +55,7 @@ public class DialogBox extends HBox {
             dialog.getStyleClass().add("delete-label");
             break;
         default:
-            // Do nothing
+            assert false; // should not reach this point.
         }
     }
 

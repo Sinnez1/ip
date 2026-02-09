@@ -23,6 +23,7 @@ public class Event extends Task {
      */
     public Event(String input) throws PingguException, DateTimeParseException {
         super("");
+        assert input != null : "Input to create Event should not be null";
         int fromDate = input.indexOf("/from");
         int toDate = input.indexOf("/to");
         if (fromDate == -1 || toDate == -1) {
@@ -58,6 +59,8 @@ public class Event extends Task {
      */
     public Event(String description, String from, String to) {
         super(description);
+        assert from != null : "From date string should not be null";
+        assert to != null : "To date string should not be null";
         //expects yyyy-mm-dd format
         this.from = LocalDate.parse(from);
         this.to = LocalDate.parse(to);

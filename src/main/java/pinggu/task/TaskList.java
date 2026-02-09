@@ -7,7 +7,7 @@ import java.util.List;
  * TaskList that contains all the tasks.
  */
 public class TaskList {
-    private List<Task> tasks;
+    private final List<Task> tasks;
 
     /**
      * Initializes TaskList object as empty ArrayList.
@@ -22,6 +22,7 @@ public class TaskList {
      * @param tasks The TaskList loaded from save file.
      */
     public TaskList(List<Task> tasks) {
+        assert tasks != null : "Loaded task list cannot be null";
         this.tasks = tasks;
     }
 
@@ -31,6 +32,7 @@ public class TaskList {
      * @param tasks The tasks to be added.
      */
     public void addTask(Task... tasks) {
+        assert tasks != null : "TaskList to add to cannot be null";
         for (Task task : tasks) {
             this.tasks.add(task);
         }
@@ -42,6 +44,7 @@ public class TaskList {
      * @param index The index of the task to be deleted (0-indexing).
      */
     public void deleteTask(int index) {
+        assert index >= 0 && index < this.tasks.size() : "Index should not be out of bounds for deleting task";
         this.tasks.remove(index);
     }
 
@@ -52,6 +55,7 @@ public class TaskList {
      * @return The task in TaskList with the index.
      */
     public Task getTask(int index) {
+        assert index >= 0 && index < this.tasks.size() : "Index should not be out of bounds for retrieving task";
         return this.tasks.get(index);
     }
 
@@ -79,6 +83,7 @@ public class TaskList {
      * @return A new TaskList containing only tasks with the keyword.
      */
     public TaskList findTasks(String keyword) {
+        assert keyword != null : "Keyword for finding tasks cannot be null";
         List<Task> filteredTasks = new ArrayList<>();
         for (Task task : this.tasks) {
             if (task.getDescription().contains(keyword)) {

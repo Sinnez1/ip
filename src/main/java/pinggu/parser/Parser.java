@@ -35,6 +35,7 @@ public class Parser {
      * @throws IllegalArgumentException If input does not match commands in enum Commands.
      */
     public static Commands parseCommand(String input) throws IllegalArgumentException {
+        assert input != null : "Command cannot be empty";
         String[] split = input.split(" ");
         String command = split[0];
         return Commands.valueOf(command.toUpperCase());
@@ -47,6 +48,7 @@ public class Parser {
      * @return An integer in 0-indexing format.
      */
     public static int parseInputIndex(String input) {
+        assert input != null : "Input must have a number";
         String[] split = input.split(" ");
         return Integer.parseInt(split[1]) - 1;
     }
@@ -59,6 +61,8 @@ public class Parser {
      * @throws PingguException If there is no task description.
      */
     public static Todo createTodo(String input) throws PingguException {
+        assert input != null : "Input string entered cannot be null";
+        assert input.toLowerCase().startsWith("todo") : "Input must be Todo command";
         if (input.trim().equals("todo")) { //remove white space and check string equality
             throw new PingguException("Pinggu needs a task to remind you of!");
         }
@@ -75,6 +79,8 @@ public class Parser {
      * @throws DateTimeParseException If due date is not written in yyyy-mm-dd format.
      */
     public static Deadline createDeadline(String input) throws PingguException, DateTimeParseException {
+        assert input != null : "Input string entered cannot be null";
+        assert input.toLowerCase().startsWith("deadline") : "Input must be Deadline command";
         if (input.trim().equals("deadline")) { //remove white space and check string equality
             throw new PingguException("Pinggu needs a deadline task description!");
         }
@@ -91,6 +97,8 @@ public class Parser {
      * @throws DateTimeParseException If start and end dates are not in yyyy-mm-dd format.
      */
     public static Event createEvent(String input) throws PingguException, DateTimeParseException {
+        assert input != null : "Input string entered cannot be null";
+        assert input.toLowerCase().startsWith("event") : "Input must be Event command";
         if (input.trim().equals("event")) {
             throw new PingguException("Pinggu needs an event description!");
         }
@@ -106,6 +114,7 @@ public class Parser {
      * @throws PingguException If keyword is empty.
      */
     public static String parseFindKeyword(String input) throws PingguException {
+        assert input != null : "Input string must have a keyword to find";
         String[] inputs = input.split(" ", 2);
         if (inputs.length < 2 || inputs[1].trim().isEmpty()) {
             throw new PingguException("Pinggu needs something to search for!");
