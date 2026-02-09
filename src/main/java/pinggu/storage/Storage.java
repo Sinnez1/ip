@@ -13,6 +13,7 @@ import pinggu.parser.Parser;
 import pinggu.task.Deadline;
 import pinggu.task.Event;
 import pinggu.task.Task;
+import pinggu.task.TaskList;
 import pinggu.task.Todo;
 
 /**
@@ -38,8 +39,8 @@ public class Storage {
      * @return The TaskList that is loaded from save file.
      * @throws PingguException If file cannot be read.
      */
-    public List<Task> load() throws PingguException {
-        List<Task> tasks = new ArrayList<>();
+    public TaskList load() throws PingguException {
+        TaskList taskList = new TaskList();
         File file = new File(filePaths);
         if (file.exists()) {
             try (Scanner scanner = new Scanner(file)) {
@@ -47,11 +48,11 @@ public class Storage {
                     String line = scanner.nextLine();
                     Task task = parseLine(line);
                     if (task != null) {
-                        tasks.add(task);
+                        taskList.addTask(task);
                     }
                 }
             } catch (IOException e) {
-                System.out.println("Error reading file" + e.getMessage());
+                throw new PingguException("Error reading file" + e.getMessage());
             }
         } else { //file does not exist, so we make directory and file
             try {
@@ -60,24 +61,24 @@ public class Storage {
                 }
                 boolean isCreated = file.createNewFile();
                 if (isCreated) {
-                    System.out.println("File created at " + file.getAbsolutePath());
+                    throw new PingguException("File created at " + file.getAbsolutePath());
                 }
             } catch (IOException e) {
-                System.out.println("File can not be created" + e.getMessage());
+                throw new PingguException("File can not be created" + e.getMessage());
             }
         }
-        return tasks;
+        return taskList;
     }
 
     /**
      * Saves each task in TaskList to save file in the specified format from Task class.
      *
-     * @param tasks The TaskList object to save into save file.
+     * @param taskList The TaskList object to save into save file.
      */
-    public void save(List<Task> tasks) {
-        assert tasks != null : "TaskList to be saved to should exist";
+    public void save(TaskList taskList) {
+        assert taskList != null : "TaskList to be saved to should exist";
         try (FileWriter fileWriter = new FileWriter(filePaths)) {
-            for (Task task : tasks) {
+            for (Task task : taskList.getTasks()) {
                 fileWriter.write(task.toFileString() + "\n");
             }
         } catch (IOException e) {
