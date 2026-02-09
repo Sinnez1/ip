@@ -2,6 +2,7 @@ package pinggu.parser;
 
 import java.time.format.DateTimeParseException;
 
+import pinggu.Constants;
 import pinggu.exception.PingguException;
 import pinggu.task.Deadline;
 import pinggu.task.Event;
@@ -48,7 +49,7 @@ public class Parser {
      * @return An integer in 0-indexing format.
      */
     public static int parseInputIndex(String input) {
-        assert input != null : "Input must have a number";
+        assert input != null : "Input must not be empty";
         String[] split = input.split(" ");
         return Integer.parseInt(split[1]) - 1;
     }
@@ -66,7 +67,7 @@ public class Parser {
         if (input.trim().equals("todo")) { //remove white space and check string equality
             throw new PingguException("Pinggu needs a task to remind you of!");
         }
-        String description = input.substring(5).trim();
+        String description = input.substring(Constants.TODO_LENGTH).trim();
         return new Todo(description);
     }
 
@@ -84,7 +85,7 @@ public class Parser {
         if (input.trim().equals("deadline")) { //remove white space and check string equality
             throw new PingguException("Pinggu needs a deadline task description!");
         }
-        String arguments = input.substring(9).trim();
+        String arguments = input.substring(Constants.DEADLINE_LENGTH).trim();
         return new Deadline(arguments);
     }
 
@@ -102,7 +103,7 @@ public class Parser {
         if (input.trim().equals("event")) {
             throw new PingguException("Pinggu needs an event description!");
         }
-        String arguments = input.substring(6).trim();
+        String arguments = input.substring(Constants.EVENT_LENGTH).trim();
         return new Event(arguments);
     }
 
@@ -114,7 +115,6 @@ public class Parser {
      * @throws PingguException If keyword is empty.
      */
     public static String parseFindKeyword(String input) throws PingguException {
-        assert input != null : "Input string must have a keyword to find";
         String[] inputs = input.split(" ", 2);
         if (inputs.length < 2 || inputs[1].trim().isEmpty()) {
             throw new PingguException("Pinggu needs something to search for!");

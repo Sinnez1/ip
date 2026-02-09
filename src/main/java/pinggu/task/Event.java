@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import pinggu.Constants;
 import pinggu.exception.PingguException;
 import pinggu.parser.Parser;
 
@@ -24,16 +25,16 @@ public class Event extends Task {
     public Event(String input) throws PingguException, DateTimeParseException {
         super("");
         assert input != null : "Input to create Event should not be null";
-        int fromDate = input.indexOf("/from");
-        int toDate = input.indexOf("/to");
-        if (fromDate == -1 || toDate == -1) {
+        int fromDateIndex = input.indexOf(Constants.EVENT_START_PREFIX);
+        int toDateIndex = input.indexOf(Constants.EVENT_END_PREFIX);
+        if (fromDateIndex == -1 || toDateIndex == -1) {
             throw new PingguException("Pinggu needs a start and end date! "
                     + "Your description should have /from <yyyy-mm-dd> and /to <yyyy-mm-dd>!");
 
         }
-        String description = input.substring(0, fromDate).trim();
-        String from = input.substring(fromDate + 6, toDate).trim();
-        String to = input.substring(toDate + 4).trim();
+        String description = input.substring(0, fromDateIndex).trim();
+        String from = input.substring(fromDateIndex + Constants.EVENT_START_PREFIX.length(), toDateIndex).trim();
+        String to = input.substring(toDateIndex + Constants.EVENT_END_PREFIX.length()).trim();
         if (description.isEmpty()) {
             throw new PingguException("Pinggu needs a description!");
         }
@@ -51,7 +52,7 @@ public class Event extends Task {
     }
 
     /**
-     * Initializes Event object with a description, start and end date.
+     * Initializes Event object with a description, start and end date from save file.
      *
      * @param description The description of the event.
      * @param from The start date of the event.
@@ -75,6 +76,7 @@ public class Event extends Task {
 
     @Override
     public String toFileString() {
-        return Parser.Commands.EVENT.name() + (getIsDone() ? "1" : "0") + " | " + getDescription() + " | " + this.from + " | " + this.to;
+        return Parser.Commands.EVENT.name() + " | " + (getIsDone() ? "1" : "0")
+                + " | " + getDescription() + " | " + this.from + " | " + this.to;
     }
 }

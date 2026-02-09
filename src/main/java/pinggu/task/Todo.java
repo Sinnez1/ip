@@ -8,7 +8,7 @@ import pinggu.parser.Parser;
 public class Todo extends Task {
 
     /**
-     * Initializes a Todo object.
+     * Initializes a Todo object from input and save file.
      *
      * @param description Description of task to be done.
      */
@@ -23,6 +23,7 @@ public class Todo extends Task {
 
     @Override
     public String toFileString() {
-        return Parser.Commands.TODO.name() + (getIsDone() ? "1" : "0") + " | " + getDescription();
+        return Parser.Commands.TODO.name() + " | " + (getIsDone() ? "1" : "0")
+                + " | " + getDescription();
     }
 }
