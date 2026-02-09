@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import pinggu.Constants;
 import pinggu.exception.PingguException;
@@ -89,9 +90,10 @@ public class Storage {
     public void save(TaskList taskList) {
         assert taskList != null : "TaskList to be saved to should exist";
         try (FileWriter fileWriter = new FileWriter(filePaths)) {
-            for (Task task : taskList.getTasks()) {
-                fileWriter.write(task.toFileString() + "\n");
-            }
+            String textToWrite = taskList.getTasks().stream()
+                    .map(Task::toFileString)
+                    .collect(Collectors.joining("\n"));
+            fileWriter.write(textToWrite + "\n");
         } catch (IOException e) {
             System.out.println("Error saving file" + e.getMessage());
         }

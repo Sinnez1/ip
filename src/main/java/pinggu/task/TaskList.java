@@ -2,6 +2,7 @@ package pinggu.task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * TaskList that contains all the tasks.
@@ -82,12 +83,9 @@ public class TaskList {
      */
     public TaskList findTasks(String keyword) {
         assert keyword != null : "Keyword for finding tasks cannot be null";
-        List<Task> filteredTasks = new ArrayList<>();
-        for (Task task : this.tasks) {
-            if (task.getDescription().contains(keyword)) {
-                filteredTasks.add(task);
-            }
-        }
+        List<Task> filteredTasks = tasks.stream()
+                .filter(task -> task.getDescription().contains(keyword))
+                .collect(Collectors.toList());
         return new TaskList(filteredTasks);
     }
 }
