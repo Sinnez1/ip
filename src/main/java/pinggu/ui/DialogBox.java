@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import pinggu.Constants;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the user's face
@@ -41,11 +42,11 @@ public class DialogBox extends HBox {
     }
 
     private void changeDialogStyle(String commandType) {
-        if (commandType.equals("default")) {
+        if (commandType.equals(Constants.COMMAND_TYPE_DEFAULT)) {
             return;
         }
         switch(commandType) {
-        case "add":
+        case Constants.COMMAND_TYPE_ADD:
             dialog.getStyleClass().add("add-label");
             break;
         case "MARK":

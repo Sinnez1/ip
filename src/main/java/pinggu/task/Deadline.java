@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import pinggu.Constants;
 import pinggu.exception.PingguException;
 import pinggu.parser.Parser;
 
@@ -11,7 +12,6 @@ import pinggu.parser.Parser;
  * Represents Deadline object with description and due date.
  */
 public class Deadline extends Task {
-
     private LocalDate by;
 
     /**
@@ -24,13 +24,13 @@ public class Deadline extends Task {
     public Deadline(String input) throws PingguException, DateTimeParseException {
         super("");
         assert input != null : "Input to create Deadline should not be null";
-        int byDate = input.indexOf("/by");
+        int byDate = input.indexOf(Constants.DEADLINE_DUE_PREFIX);
         if (byDate == -1) { //cannot find a due date
             throw new PingguException(" Pinggu needs a due date! "
                     + "Add /by <yyyy-mm-dd> into your description!");
         }
         String description = input.substring(0, byDate).trim();
-        String by = input.substring(byDate + 4).trim();
+        String by = input.substring(byDate + Constants.DEADLINE_DUE_PREFIX.length()).trim();
         if (description.isEmpty()) {
             throw new PingguException("Pinggu needs a description!");
         }
@@ -64,6 +64,7 @@ public class Deadline extends Task {
 
     @Override
     public String toFileString() {
-        return Parser.Commands.DEADLINE.name() + (getIsDone() ? "1" : "0") + " | " + getDescription() + " | " + this.by;
+        return Parser.Commands.DEADLINE.name() + " | " + (getIsDone() ? "1" : "0")
+                + " | " + getDescription() + " | " + this.by;
     }
 }

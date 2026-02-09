@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import pinggu.Constants;
 import pinggu.exception.PingguException;
 import pinggu.parser.Parser;
 import pinggu.task.Deadline;
@@ -86,7 +87,7 @@ public class Storage {
 
     private Task parseLine(String line) {
         assert line != null : "Line from file should not be null";
-        String[] parts = line.split("\\|");
+        String[] parts = line.split(Constants.SAVEFILE_DELIMITER);
         if (parts.length < 3) {
             return null; //task is invalid
         }
