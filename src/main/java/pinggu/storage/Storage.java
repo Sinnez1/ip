@@ -100,11 +100,15 @@ public class Storage {
             task = new Todo(taskDescription);
             break;
         case DEADLINE:
-            assert parts.length >= 4 : "Deadline task in file has incorrect format";
+            if (parts.length < 4) {
+                return null;
+            }
             task = new Deadline(taskDescription, parts[3].trim());
             break;
         case EVENT:
-            assert parts.length >= 5 : "Event task in file has incorrect format";
+            if (parts.length < 5) {
+                return null;
+            }
             task = new Event(taskDescription, parts[3].trim(), parts[4].trim());
             break;
         default:

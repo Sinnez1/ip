@@ -44,7 +44,6 @@ public class TaskList {
      * @param index The index of the task to be deleted (0-indexing).
      */
     public void deleteTask(int index) {
-        assert index >= 0 && index < this.tasks.size() : "Index should not be out of bounds for deleting task";
         this.tasks.remove(index);
     }
 
@@ -55,7 +54,6 @@ public class TaskList {
      * @return The task in TaskList with the index.
      */
     public Task getTask(int index) {
-        assert index >= 0 && index < this.tasks.size() : "Index should not be out of bounds for retrieving task";
         return this.tasks.get(index);
     }
 

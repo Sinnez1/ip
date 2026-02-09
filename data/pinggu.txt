@@ -1,4 +1,2 @@
-TODO | 1 | 0
-DEADLINE | 0 | ip | 2026-01-25
-EVENT | 0 | ip | 2026-01-25 | 2027-01-28
-TODO | 0 | check ip
+TODO | 1 | test
+DEADLINE | 1 | test 2 | 2026-01-26
