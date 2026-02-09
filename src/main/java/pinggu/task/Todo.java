@@ -8,7 +8,7 @@ import pinggu.parser.Parser;
 public class Todo extends Task {
 
     /**
-     * Initializes a Todo object.
+     * Initializes a Todo object from input and save file.
      *
      * @param description Description of task to be done.
      */

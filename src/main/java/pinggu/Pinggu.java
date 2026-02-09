@@ -42,7 +42,11 @@ public class Pinggu {
      * @return Welcome message.
      */
     public String getWelcomeMessage() {
-        return ui.showWelcomeMessage();
+        String message = ui.showWelcomeMessage();
+        if (storage.isNewFileCreated()) {
+            message += "\n(A new save file was created at: " + storage.getFilePaths() + ")";
+        }
+        return message;
     }
 
     /**
@@ -159,6 +163,7 @@ public class Pinggu {
             newTask = Parser.createEvent(input);
             break;
         default:
+            assert false;
             throw new PingguException("Unexpected add value: " + cmd); //this path should never be reached.
         }
         taskList.addTask(newTask);
