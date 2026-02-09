@@ -49,7 +49,7 @@ public class Parser {
      * @return An integer in 0-indexing format.
      */
     public static int parseInputIndex(String input) {
-        assert input != null : "Input must have a number";
+        assert input != null : "Input must not be empty";
         String[] split = input.split(" ");
         return Integer.parseInt(split[1]) - 1;
     }
@@ -115,7 +115,6 @@ public class Parser {
      * @throws PingguException If keyword is empty.
      */
     public static String parseFindKeyword(String input) throws PingguException {
-        assert input != null : "Input string must have a keyword to find";
         String[] inputs = input.split(" ", 2);
         if (inputs.length < 2 || inputs[1].trim().isEmpty()) {
             throw new PingguException("Pinggu needs something to search for!");
