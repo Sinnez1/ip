@@ -88,4 +88,14 @@ public class TaskList {
                 .collect(Collectors.toList());
         return new TaskList(filteredTasks);
     }
+
+    /**
+     * Checks if TaskList contains identical task.
+     *
+     * @param task The task to check for.
+     * @return True if TaskList contains a duplicate task, false otherwise.
+     */
+    public boolean hasDuplicate(Task task) {
+        return tasks.stream().anyMatch(t -> t.equals(task));
+    }
 }

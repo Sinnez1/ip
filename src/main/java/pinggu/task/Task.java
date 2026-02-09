@@ -82,4 +82,21 @@ public class Task {
         assert description != null : "Description to set to should not be null";
         this.description = description;
     }
+
+    /**
+     * Checks if object is same as another object, based on description.
+     *
+     * @param obj   The reference object with which to compare.
+     * @return True if objects are equal, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Task task)) {
+            return false;
+        }
+        return this.description.equals(task.description);
+    }
 }

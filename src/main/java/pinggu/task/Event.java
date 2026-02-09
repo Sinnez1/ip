@@ -79,4 +79,15 @@ public class Event extends Task {
         return Parser.Commands.EVENT.name() + " | " + (getIsDone() ? "1" : "0")
                 + " | " + getDescription() + " | " + this.from + " | " + this.to;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Event event)) {
+            return false;
+        }
+        return super.equals(obj) && this.from.equals(event.from) && this.to.equals(event.to);
+    }
 }
