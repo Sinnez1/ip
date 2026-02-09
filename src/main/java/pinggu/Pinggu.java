@@ -14,7 +14,7 @@ import pinggu.ui.Ui;
  */
 public class Pinggu {
     public static final String FILEPATH = "./data/pinggu.txt";
-    private TaskList tasks;
+    private TaskList taskList;
     private final Storage storage;
     private final Ui ui;
     private boolean hasLoadError = false;
@@ -29,10 +29,10 @@ public class Pinggu {
         ui = new Ui();
         storage = new Storage(".", "data", "pinggu.txt");
         try {
-            tasks = new TaskList(storage.load());
+            taskList = storage.load();
         } catch (PingguException e) {
             this.hasLoadError = true;
-            tasks = new TaskList();
+            taskList = new TaskList();
         }
     }
 
@@ -61,7 +61,7 @@ public class Pinggu {
         assert input != null : "Input must not be null";
         assert ui != null : "Ui component must exist";
         assert storage != null : "Storage component must exist";
-        assert tasks != null : "TaskList component must exist";
+        assert taskList != null : "TaskList component must exist";
         try {
             return executeCommand(input);
         } catch (NumberFormatException e) { //has to come before IllegalArgumentException as it extends that
@@ -72,7 +72,7 @@ public class Pinggu {
             return ui.showErrorMessage(e.getMessage());
         } catch (IndexOutOfBoundsException e) {
             return ui.showErrorMessage("Pinggu does not have this task number! "
-                    + "The max is " + tasks.getSize() + ".");
+                    + "The max is " + taskList.getSize() + ".");
         } catch (DateTimeParseException e) {
             return ui.showErrorMessage("Pinggu needs a valid date of <yyyy-mm-dd>!");
         }
@@ -98,7 +98,7 @@ public class Pinggu {
         case BYE:
             return ui.showExitMessage();
         case LIST:
-            return ui.printTaskList(tasks);
+            return ui.printTaskList(taskList);
         case MARK:
             return executeMarkCommand(input);
         case UNMARK:
@@ -119,31 +119,31 @@ public class Pinggu {
 
     private String executeMarkCommand(String input) throws IndexOutOfBoundsException {
         int markIndex = Parser.parseInputIndex(input);
-        Task taskToMark = tasks.getTask(markIndex); //throws error if out of bounds
+        Task taskToMark = taskList.getTask(markIndex); //throws error if out of bounds
         assert taskToMark != null : "Task to be marked must exist";
         taskToMark.setDone();
-        storage.save(tasks.getTasks());
+        storage.save(taskList);
         this.commandType = Parser.Commands.MARK.name();
         return ui.showMarkTaskMessage(taskToMark);
     }
 
     private String executeUnmarkCommand(String input) throws IndexOutOfBoundsException {
         int unmarkIndex = Parser.parseInputIndex(input);
-        Task taskToUnmark = tasks.getTask(unmarkIndex); //throws error if out of bounds
+        Task taskToUnmark = taskList.getTask(unmarkIndex); //throws error if out of bounds
         assert taskToUnmark != null : "Task to be unmarked must exist";
         taskToUnmark.setNotDone();
-        storage.save(tasks.getTasks());
+        storage.save(taskList);
         return ui.showUnmarkTaskMessage(taskToUnmark);
     }
 
     private String executeDeleteCommand(String input) throws IndexOutOfBoundsException {
         int deleteIndex = Parser.parseInputIndex(input);
-        Task taskToDelete = tasks.getTask(deleteIndex); //throws error if out of bounds
+        Task taskToDelete = taskList.getTask(deleteIndex); //throws error if out of bounds
         assert taskToDelete != null : "Task to be deleted must exist";
-        tasks.deleteTask(deleteIndex);
-        storage.save(tasks.getTasks());
+        taskList.deleteTask(deleteIndex);
+        storage.save(taskList);
         this.commandType = Parser.Commands.DELETE.name();
-        return ui.showDeleteMessage(taskToDelete, tasks.getSize());
+        return ui.showDeleteMessage(taskToDelete, taskList.getSize());
     }
 
     private String executeAddCommand(Parser.Commands cmd, String input) throws PingguException {
@@ -161,15 +161,15 @@ public class Pinggu {
         default:
             throw new PingguException("Unexpected add value: " + cmd); //this path should never be reached.
         }
-        tasks.addTask(newTask);
-        storage.save(tasks.getTasks());
+        taskList.addTask(newTask);
+        storage.save(taskList);
         this.commandType = Constants.COMMAND_TYPE_ADD;
-        return ui.showAddMessage(newTask, tasks.getSize());
+        return ui.showAddMessage(newTask, taskList.getSize());
     }
 
     private String executeFindCommand(String input) throws PingguException {
         String keyword = Parser.parseFindKeyword(input);
-        TaskList matchingTasks = tasks.findTasks(keyword);
+        TaskList matchingTasks = taskList.findTasks(keyword);
         assert matchingTasks != null : "Task list must exist after finding tasks";
         return ui.showFindMessage(matchingTasks);
     }
